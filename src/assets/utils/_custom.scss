@@ -1,0 +1,24 @@
+// z_index
+.zindex__banner{
+  z-index: 100;
+}
+
+// top
+.top__banner{
+  top: 100px;
+}
+
+// position center{
+.position__banner{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+// title SEO
+.textindent__title{
+  // background-image: url('~@/assets/images/prifix.png');
+  text-indent: 101%;
+  white-space: nowrap;
+  overflow: hidden;
+}
