@@ -1,6 +1,16 @@
 .img__banner{
   width: 100%;
-  // @include media-breakpoint-up(xl) {
-  //   width: 1200px
-  // }
+}
+
+.admin__logo{
+  top:20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+}
+
+.avatar{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
 }

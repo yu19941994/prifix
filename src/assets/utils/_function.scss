@@ -1,0 +1,22 @@
+@function asset($path) {
+  @return url("~@/assets/images/prifix.png");
+}
+
+.textindent__title {
+  background: asset('path.png') no-repeat center center; 
+  background-size: cover;
+  height: 19.408px;
+  width: 90px;
+}
+
+@function bg($path) {
+  @return url("~@/assets/images/pure_black.jpg");
+}
+
+.login__bg{ 
+  background: bg('path.png') no-repeat center center; 
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.8;
+}

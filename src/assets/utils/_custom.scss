@@ -10,15 +10,153 @@
 
 // position center{
 .position__banner{
-  top: 50%;
+  top: 11%;
   left: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -11%);
+  @include xxs() { 
+    top: 15%;
+    transform: translate(-50%, -15%);
+  } 
+  @include media-breakpoint-up(sm) { 
+    top: 14%;
+    transform: translate(-50%, -14%);
+  } 
+  @include media-breakpoint-up(md) { 
+    top: 20%;
+    transform: translate(-50%, -20%);
+  }
+  @include media-breakpoint-up(lg) { 
+    top: 33%;
+    transform: translate(-50%, -33%);
+  }
+  @include media-breakpoint-up(xl) { 
+    top: 50%;
+    transform: translate(-50%, -50%)
+  }
 }
 
 // title SEO
 .textindent__title{
-  // background-image: url('~@/assets/images/prifix.png');
   text-indent: 101%;
   white-space: nowrap;
   overflow: hidden;
 }
+
+// font size
+.font--xl{
+  font-size: 40px;
+  @include media-breakpoint-up(md) { 
+    font-size: 66px;
+  }
+}
+
+.font--title{
+  font-size: 32px;
+  @include xxs() { 
+    font-size: 44px;
+  }
+  @include media-breakpoint-up(sm) { 
+    font-size: 50px;
+  }
+  @include media-breakpoint-up(md) { 
+    font-size: 66px;
+  }
+  @include media-breakpoint-up(lg) { 
+    font-size: 72px;
+  }
+}
+
+.font--subtitle{
+  font-size: 14px;
+  @include xxs() { 
+    font-size: 18px;
+  }
+  @include media-breakpoint-up(sm) { 
+    font-size: 20px;
+  }
+  @include media-breakpoint-up(md) { 
+    font-size: 25px;
+  }
+  @include media-breakpoint-up(lg) { 
+    font-size: 32px;
+  }
+}
+
+.font--description{
+  font-size: 12px;
+  @include media-breakpoint-up(sm) { 
+    font-size: 14px;
+  }
+  @include media-breakpoint-up(md) { 
+    font-size: 16px;
+  }
+  @include media-breakpoint-up(lg) { 
+    font-size: 20px;
+  }
+}
+
+.font--md{
+  font-size: 16px;
+}
+
+
+.font--sm{
+  font-size: 14px;
+}
+
+// text clolr
+.text--warning{
+  color: #F6BF43;
+}
+
+.text--gray{
+  color: #636469;
+}
+
+// bg
+.bg--dark{
+  background-color: #242424;
+}
+
+.bg--dark__100{
+  background-color: #1E1E1E;
+}
+
+.bg--dark__200{
+  background-color: #101010;
+}
+
+.bg--dark__300{
+  background-color: #151515;
+}
+
+.bg--dark__400{
+  background-color: #1C1C1C;
+}
+.bg--dark__500{
+  background-color: #434343;
+}
+
+// border
+.border--top{
+  border-top: 1px solid #19191a;
+}
+
+// width
+.w-47{
+  width: 47.5%;
+}
+
+.w--login{
+  width: 355px;
+}
+
+// shadow
+.box--shadow{
+  box-shadow: 0.15rem 0.15rem 0.1rem rgba(14, 14, 14, 0.15) !important;
+}
+
+// // sticky-top
+// .sticky-top{
+//   z-index: 10 !important;
+// }

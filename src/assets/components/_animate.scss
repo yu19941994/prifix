@@ -1,0 +1,42 @@
+.animate__fadeInDown{
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  animation-name: fadeInDown__s;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  @include media-breakpoint-up(md) { 
+    animation-name: fadeInDown;
+  }
+  @include media-breakpoint-up(lg) { 
+    animation-name: fadeInDown__l;
+  }
+}
+
+@keyframes fadeInDown__l{
+  from{
+    top: 0px;
+  }
+  to{
+    top: 60px;
+  }
+}
+
+@keyframes fadeInDown{
+  from{
+    top: 0px;
+  }
+  to{
+    top: 46px;
+  }
+}
+
+@keyframes fadeInDown__s{
+  from{
+    top: 0px;
+  }
+  to{
+    top: 28px;
+  }
+}

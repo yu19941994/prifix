@@ -1,0 +1,17 @@
+.form__login{
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.font-control, input::placeholder{ 
+  font-size: 14px !important;
+}
+
+.box--shadow__form{
+  box-shadow: 0.05rem 0.05rem 0.55rem rgba(14, 14, 14, 0.18) !important;
+}
+
+label{
+  font-size: 14px !important;
+}
