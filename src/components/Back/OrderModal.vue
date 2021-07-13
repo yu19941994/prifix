@@ -43,11 +43,11 @@
             </div>
             <div class="col-md-4">
               <label for="paid_date">付款日期</label>
-              <input id="paid_date" type="date" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.paid_date">
+              <input id="paid_date" type="date" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.payment_method">
             </div>
             <div class="col-md-4">
               <label for="payment_method">付款方式</label>
-              <input id="payment_method" type="text" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.payment_method">
+              <input id="payment_method" type="text" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.create_at">
             </div>
           </div>
           <div class="form-group">
@@ -68,7 +68,7 @@
     <div class="modal-dialog modal-dialog-centered" v-else>
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
-          <h5 id="delProductModalLabel" class="modal-title">
+          <h5 id="delOrderModalLabel" class="modal-title">
             <span v-if="status === 'delAll'">刪除全部</span>
             <span v-else>刪除訂單</span>
           </h5>
@@ -76,7 +76,7 @@
         </div>
         <div class="modal-body">
           是否刪除
-          <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
+          <strong class="text-danger"></strong> 列表(刪除後將無法恢復)。
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -98,7 +98,8 @@ export default {
   data () {
     return {
       tempOrder: {
-      }
+      },
+      date: new Date()
     }
   },
   methods: {
@@ -129,9 +130,16 @@ export default {
           if (res.data.success) {
             this.$emit('get-order')
             this.modal.hide()
+            this.$swal('Success')
           }
         })
         .catch(err => console.log(err))
+    }
+  },
+  computed: {
+    timestampToDate () {
+      const dd = new Date(this.due_date * 1000)
+      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
     }
   },
   mounted () {

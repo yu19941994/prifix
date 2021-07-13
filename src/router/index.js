@@ -46,6 +46,10 @@ const routes = [
       {
         path: 'coupons',
         component: () => import('../views/Back/Coupons.vue')
+      },
+      {
+        path: 'articles',
+        component: () => import('../views/Back/Articles.vue')
       }
     ]
   }

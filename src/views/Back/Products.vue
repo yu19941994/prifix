@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <loading v-model:active="isLoading"
+                :can-cancel="true"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 產品列表
     </h2>
@@ -27,7 +31,7 @@
             <td>{{ item.title }}</td>
             <td>{{ item.origin_price }}</td>
             <td>{{ item.price }}</td>
-            <td>{{ item.is_enable }}</td>
+            <td>{{ item.is_enabled === 1 ? '是' : '否' }}</td>
             <td>
               <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#productModal" @click="adjustStatus(false, item, 'put')">
                 <span class="material-icons font--sm">edit</span>
@@ -41,7 +45,7 @@
           </tr>
         </tbody>
       </table>
-      <PaginationCom :page="pagination"></PaginationCom>
+      <PaginationCom :page="pagination" @get-page="getProduct"></PaginationCom>
     </div>
     <ProductModalCom ref="modal" @get-product="getProduct" :is-new="isNew" :status="status"></ProductModalCom>
   </div>
@@ -50,10 +54,12 @@
 <script>
 import ProductModalCom from '@/components/Back/ProductModal'
 import PaginationCom from '@/components/Pagination'
+import Loading from 'vue-loading-overlay'
 export default {
   components: {
     ProductModalCom,
-    PaginationCom
+    PaginationCom,
+    Loading
   },
   data () {
     return {
@@ -61,14 +67,18 @@ export default {
       products: [],
       pagination: {},
       isNew: false,
-      status: ''
+      status: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
     getProduct (page = 1) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.axios.get(url)
         .then(res => {
+          this.isLoading = false
           console.log(res.data)
           if (res.data.success) {
             this.products = res.data.products
@@ -82,7 +92,7 @@ export default {
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
-      this.$refs.modal.tempProduct = this.isNew ? { imageUrl: [] } : JSON.parse(JSON.stringify(item))
+      this.$refs.modal.tempProduct = this.isNew ? { imagesUrl: [] } : JSON.parse(JSON.stringify(item))
       this.$bus.emit('tempProduct', this.$refs.modal.tempProduct)
     }
   },

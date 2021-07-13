@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c8d5d"],{5727:function(n,c,e){"use strict";e.r(c);var t=e("7a23");function o(n,c){return Object(t["openBlock"])(),Object(t["createBlock"])("div",null," Cart ")}const r={};r.render=o;c["default"]=r}}]);
+//# sourceMappingURL=chunk-2d0c8d5d.3338b584.js.map

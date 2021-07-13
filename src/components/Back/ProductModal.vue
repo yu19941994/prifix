@@ -134,7 +134,7 @@ export default {
   data () {
     return {
       tempProduct: {
-        imgUrl: '',
+        imageUrl: '',
         imagesUrl: []
       },
       image: ''
@@ -160,6 +160,7 @@ export default {
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
+            this.$swal('Success')
           } else {
             let alertStr = ''
             if (res.data.message.includes(' title 欄位為必填')) {
@@ -195,6 +196,7 @@ export default {
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
+            this.$swal('Success')
           }
         })
         .catch(err => console.log(err))

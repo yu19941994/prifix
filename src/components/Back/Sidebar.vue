@@ -43,6 +43,18 @@
             </a>
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/admin/articles" class="text-decoration-none">
+            <a href="#" class="nav-link text-white font--sm text-decoration-none d-flex align-items-center"
+              :class="{'active': choose === 'a'}"
+              @click="choose='a'">
+              <span class="material-icons text--md">
+                article
+              </span>
+              <span class="px-2">文章列表</span>
+            </a>
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>

@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <loading v-model:active="isLoading"
+                :can-cancel="true"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 訂單列表
     </h2>
@@ -26,9 +30,9 @@
           <tr v-for="item of orders" :key="item.id">
             <th scope="row">{{ item.num }}</th>
             <td>{{ item.user.name }}</td>
-            <td>{{ item.create_at }}</td>
+            <td>{{ adjustDate(item.create_at) }}</td>
             <td>{{ item.total }}</td>
-            <td>{{ item.is_paid }}</td>
+            <td>{{ item.is_paid === true ? '是' : '否' }}</td>
             <td>{{ item.message }}</td>
             <td>
               <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#orderModal" @click="adjustStatus(false, item, 'put')">
@@ -43,7 +47,7 @@
           </tr>
         </tbody>
       </table>
-      <PaginationCom :page="pagination"></PaginationCom>
+      <PaginationCom :page="pagination" @get-page="getOrder"></PaginationCom>
     </div>
     <OrderModalCom ref="modal" @get-order="getOrder" :is-delet-all="isDeleteAll" :status="status"></OrderModalCom>
   </div>
@@ -52,10 +56,13 @@
 <script>
 import OrderModalCom from '@/components/Back/OrderModal'
 import PaginationCom from '@/components/Pagination'
+import Loading from 'vue-loading-overlay'
+
 export default {
   components: {
     OrderModalCom,
-    PaginationCom
+    PaginationCom,
+    Loading
   },
   data () {
     return {
@@ -68,9 +75,11 @@ export default {
   },
   methods: {
     getOrder (page = 1) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`
       this.axios.get(url)
         .then(res => {
+          this.isLoading = false
           console.log(res.data)
           if (res.data.success) {
             this.orders = res.data.orders
@@ -88,6 +97,10 @@ export default {
         this.$refs.modal.tempOrder = JSON.parse(JSON.stringify(item))
         this.$bus.emit('tempOrder', this.$refs.modal.tempOrder)
       }
+    },
+    adjustDate (date) {
+      const dd = new Date(date * 1000)
+      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
     }
   },
   created () {

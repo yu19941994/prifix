@@ -5,39 +5,41 @@
                 :on-cancel="onCancel"
                 :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
-      # 優惠券列表
+      # 文章列表
     </h2>
     <div class="rounded bg-dark p-3 mb-5 box--shadow">
       <div class="d-flex justify-content-end mb-3">
-        <button type="button" class="btn btn-warning text-white"  data-bs-toggle="modal" data-bs-target="#couponModal" @click="adjustStatus(true)">
+        <button type="button" class="btn btn-success text-white"  data-bs-toggle="modal" data-bs-target="#articleModal" @click="adjustStatus(true)">
           <span class="material-icons font--sm">add</span>
-          新增優惠券
+          新增文章
         </button>
       </div>
       <table class="table table-dark">
         <thead>
-          <tr class="table-warning">
-            <th scope="col">優惠券名稱</th>
-            <th scope="col" width="120">折價比率</th>
-            <th scope="col" width="120">是否啟用</th>
-            <th scope="col" width="180">有效期限</th>
-            <!-- <th scope="col">優惠碼</th> -->
+          <tr class="table-success">
+            <th scope="col" width="120">作者</th>
+            <th scope="col" width="180">撰寫日期</th>
+            <th scope="col" width="120">標題</th>
+            <th scope="col" width="120">是否公開</th>
+            <th scope="col" width="100">標籤</th>
+            <th scope="col">文章描述</th>
             <th scope="col" width="180">編輯</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item of coupons" :key="item.id">
-            <th scope="row">{{ item.title }}</th>
-            <td>{{ item.percent }}</td>
-            <td>{{ item.is_enabled }}</td>
-            <td>{{ adjustDate(item.due_date) }}</td>
-            <!-- <td>{{ item.is_enable }}</td> -->
+          <tr v-for="item of articles" :key="item.id">
+            <th scope="row">{{ item.author }}</th>
+            <td>{{ adjustDate(item.create_at) }}</td>
+            <td>{{ item.title}}</td>
+            <td>{{ item.isPublic === 'true' ? '是' : '否' }}</td>
+            <td>{{ item.tag }}</td>
+            <td>{{ item.description }}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#couponModal" @click="adjustStatus(false, item, 'put')">
+              <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#articleModal" @click="adjustStatus(false, item, 'put')">
                 <span class="material-icons font--sm">edit</span>
                 編輯
               </button>
-              <button type="button" class="btn btn-sm btn-danger text-white"  data-bs-toggle="modal" data-bs-target="#couponModal" @click="adjustStatus(false, item, 'del')">
+              <button type="button" class="btn btn-sm btn-danger text-white"  data-bs-toggle="modal" data-bs-target="#articleModal" @click="adjustStatus(false, item, 'del')">
                 <span class="material-icons font--sm">delete</span>
                 刪除
               </button>
@@ -45,41 +47,41 @@
           </tr>
         </tbody>
       </table>
-      <PaginationCom :page="pagination" @get-page="getCoupon"></PaginationCom>
+      <PaginationCom :page="pagination" @get-page="getArticle"></PaginationCom>
     </div>
-    <CouponModalCom ref="modal" @get-coupon="getCoupon" :is-new="isNew" :status="status"></CouponModalCom>
+    <ArticleModalCom ref="modal" @get-article="getArticle" :is-new="isNew" :status="status"></ArticleModalCom>
   </div>
 </template>
 
 <script>
-import CouponModalCom from '@/components/Back/CouponModal'
+import ArticleModalCom from '@/components/Back/ArticleModal'
 import PaginationCom from '@/components/Pagination'
 import Loading from 'vue-loading-overlay'
 export default {
   components: {
-    CouponModalCom,
+    ArticleModalCom,
     PaginationCom,
     Loading
   },
   data () {
     return {
       productModal: {},
-      coupons: [],
+      articles: [],
       pagination: {},
       isNew: false,
       status: ''
     }
   },
   methods: {
-    getCoupon (page = 1) {
+    getArticle (page = 1) {
       this.isLoading = true
-      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
           console.log(res.data)
           if (res.data.success) {
-            this.coupons = res.data.coupons
+            this.articles = res.data.articles
             this.pagination = res.data.pagination
           }
         })
@@ -90,8 +92,8 @@ export default {
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
-      this.$refs.modal.tempCoupon = this.isNew ? {} : JSON.parse(JSON.stringify(item))
-      this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
+      this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : JSON.parse(JSON.stringify(item))
+      this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
     },
     adjustDate (date) {
       const dd = new Date(date * 1000)
@@ -99,7 +101,7 @@ export default {
     }
   },
   created () {
-    this.getCoupon()
+    this.getArticle()
   }
 }
 </script>
