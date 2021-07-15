@@ -148,7 +148,7 @@
       <h2 class="h4 text-center py-2 px-3">訂閱 PRIFIX ，接收最新影音及平權訊息！</h2>
       <div class="row d-flex justify-content-center">
         <div class="col-8 col-md-6">
-          <Form ref="form" class="col-md-6" v-slot="{ errors }" @submit="onSubmit">
+          <Form ref="form" v-slot="{ errors }" @submit="onSubmit">
             <div class="input-group mb-3">
               <label for="email"></label>
               <Field class="form-control rounded"
