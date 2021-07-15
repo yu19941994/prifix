@@ -17,10 +17,10 @@
       <table class="table table-dark">
         <thead>
           <tr class="table-success">
-            <th scope="col" width="120">作者</th>
-            <th scope="col" width="180">撰寫日期</th>
-            <th scope="col" width="120">標題</th>
-            <th scope="col" width="120">是否公開</th>
+            <th scope="col" width="100">作者</th>
+            <th scope="col" width="100">撰寫日期</th>
+            <th scope="col" width="180">標題</th>
+            <th scope="col" width="100">是否公開</th>
             <th scope="col" width="100">標籤</th>
             <th scope="col">文章描述</th>
             <th scope="col" width="180">編輯</th>

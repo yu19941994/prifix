@@ -15,29 +15,29 @@ body{
 
 // position center{
 .position__banner{
-  top: 11%;
+  top: 15%;
   left: 50%;
-  transform: translate(-50%, -11%);
+  transform: translate(-50%, -15%);
   @include xxs() { 
-    top: 15%;
-    transform: translate(-50%, -15%);
-  } 
-  @include media-breakpoint-up(sm) { 
-    top: 14%;
-    transform: translate(-50%, -14%);
-  } 
-  @include media-breakpoint-up(md) { 
     top: 20%;
     transform: translate(-50%, -20%);
+  } 
+  @include media-breakpoint-up(sm) { 
+    top: 25%;
+    transform: translate(-50%, -25%);
+  } 
+  @include media-breakpoint-up(md) { 
+    top: 30%;
+    transform: translate(-50%, -30%);
   }
   @include media-breakpoint-up(lg) { 
-    top: 33%;
-    transform: translate(-50%, -33%);
-  }
-  @include media-breakpoint-up(xl) { 
     top: 50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
   }
+  // @include media-breakpoint-up(xl) { 
+  //   top: 50%;
+  //   transform: translate(-50%, -50%)
+  // }
 }
 
 // title SEO
@@ -100,6 +100,10 @@ body{
   }
 }
 
+.font--lg{
+  font-size: 20px;
+}
+
 .font--md{
   font-size: 16px;
 }
@@ -109,6 +113,10 @@ body{
   font-size: 14px;
 }
 
+.font--xs{
+  font-size: 12px;
+}
+
 // text clolr
 .text--warning{
   color: #F6BF43;
@@ -116,6 +124,10 @@ body{
 
 .text--gray{
   color: #636469;
+}
+
+.text--black{
+  color: #000;
 }
 
 // bg
@@ -142,18 +154,48 @@ body{
   background-color: #434343;
 }
 
+.bg--black{
+  background-color: #000;
+}
+
+.bg--green{
+  background-color: #61D4AB;
+}
+
+.bg--yellow{
+  background-color: #F3E8C6;
+}
+
+.bg--light{
+  background-color: #f8f9fa;
+}
+
 // border
 .border--top{
   border-top: 1px solid #19191a;
 }
 
 // width
-.w-47{
+.w--47{
   width: 47.5%;
+}
+
+.w--articlePhoto{
+  width: 100%;
+  @include media-breakpoint-up(sm) { 
+    width: 70%;
+  }
 }
 
 .w--login{
   width: 355px;
+}
+
+.w--article{
+  width: 100%;
+  @include media-breakpoint-up(sm) { 
+    width: 47.5%;
+  }
 }
 
 // shadow
@@ -161,7 +203,29 @@ body{
   box-shadow: 0.15rem 0.15rem 0.1rem rgba(14, 14, 14, 0.15) !important;
 }
 
-// // sticky-top
-// .sticky-top{
-//   z-index: 10 !important;
-// }
+// posiiton
+.top--10{
+  top: 10px;
+}
+
+.start--10{
+  left: 10px;
+}
+
+.middle--50{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// hover
+.hover--success:hover, .hover--success:active{
+  background:#A3D1D1;
+  font-style: italic;
+  color: white !important;
+}
+
+// opacity
+.opacity__article{
+  opacity: 78%;
+}

@@ -14,3 +14,43 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.img__card{
+  height: 17rem; 
+  object-fit: cover;
+  @include media-breakpoint-up(md) { 
+    height: 13rem; 
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 16rem; 
+  }
+  @include media-breakpoint-up(xl) { 
+    height: 23rem; 
+  }
+}
+
+.img__quote{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.img__famous{
+  width: 200px;
+  height: 128px;
+  object-fit: cover;
+}
+
+.img__article{
+  height: 240px;
+  width: 100%;
+  object-position: 50% 25%;
+  object-fit: cover;
+  @include media-breakpoint-up(lg) { 
+    height: 280px;
+  }
+  @include media-breakpoint-up(xl) { 
+    height: 340px;
+  }
+}

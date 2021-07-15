@@ -25,3 +25,8 @@
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+.nav__home:hover, .nav__home:active{
+  background-color: #F6BF43;
+  font-style: italic;
+}
