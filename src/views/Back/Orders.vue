@@ -1,8 +1,6 @@
 <template>
   <div class="container-fluid">
     <loading v-model:active="isLoading"
-                :can-cancel="true"
-                :on-cancel="onCancel"
                 :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 訂單列表
@@ -19,10 +17,11 @@
           <tr class="table--purple">
             <th scope="col" width="120">訂單編號</th>
             <th scope="col" width="180">客戶姓名</th>
-            <th scope="col" width="120">購買日期</th>
+            <th scope="col" width="120">訂單建立日期</th>
             <th scope="col" width="120">總價</th>
             <th scope="col" width="100">付款狀態</th>
-            <th scope="col">客戶留言</th>
+            <th scope="col">付款方式</th>
+            <th scope="col">付款日期</th>
             <th scope="col" width="180">編輯</th>
           </tr>
         </thead>
@@ -30,10 +29,11 @@
           <tr v-for="item of orders" :key="item.id">
             <th scope="row">{{ item.num }}</th>
             <td>{{ item.user.name }}</td>
-            <td>{{ adjustDate(item.create_at) }}</td>
+            <td>{{ timestampToDate(item.create_at) }}</td>
             <td>{{ item.total }}</td>
             <td>{{ item.is_paid === true ? '是' : '否' }}</td>
-            <td>{{ item.message }}</td>
+            <td>{{ item.payment_method }}</td>
+            <td>{{ timestampToDate(item.paid_date) }}</td>
             <td>
               <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#orderModal" @click="adjustStatus(false, item, 'put')">
                 <span class="material-icons font--sm">edit</span>
@@ -49,7 +49,7 @@
       </table>
       <PaginationCom :page="pagination" @get-page="getOrder"></PaginationCom>
     </div>
-    <OrderModalCom ref="modal" @get-order="getOrder" :is-delet-all="isDeleteAll" :status="status"></OrderModalCom>
+    <OrderModalCom ref="modal" @get-order="getOrder" :is-delet-all="isDeleteAll" :status="status" @is-loading="isLoadingHandler"></OrderModalCom>
   </div>
 </template>
 
@@ -70,7 +70,9 @@ export default {
       orders: [],
       pagination: {},
       isDeleteAll: false,
-      status: ''
+      status: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -94,13 +96,23 @@ export default {
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
       if (item) {
-        this.$refs.modal.tempOrder = JSON.parse(JSON.stringify(item))
+        const tempItem = JSON.parse(JSON.stringify(item))
+        tempItem.paid_date = this.timestampToDate(tempItem.paid_date)
+        this.$refs.modal.tempOrder = tempItem
         this.$bus.emit('tempOrder', this.$refs.modal.tempOrder)
       }
     },
-    adjustDate (date) {
-      const dd = new Date(date * 1000)
-      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
+    timestampToDate (timestamp) {
+      if (timestamp) {
+        const dd = new Date(timestamp * 1000)
+        return `${dd.getFullYear()}-${this.adjustZero(dd.getMonth() + 1)}-${this.adjustZero(dd.getDate())}`
+      }
+    },
+    adjustZero (num) {
+      return num < 10 ? `0${num}` : `${num}`
+    },
+    isLoadingHandler (boolean) {
+      boolean === true ? this.isLoading = true : this.isLoading = false
     }
   },
   created () {

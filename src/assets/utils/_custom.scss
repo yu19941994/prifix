@@ -100,6 +100,13 @@ body{
   }
 }
 
+.font--error{
+  font-size: 70px;
+  @include media-breakpoint-up(md) { 
+    font-size: 100px;
+  }
+}
+
 .font--lg{
   font-size: 20px;
 }
@@ -196,6 +203,11 @@ body{
   @include media-breakpoint-up(sm) { 
     width: 47.5%;
   }
+}
+
+// height
+.h--100{
+  height: 100vh;
 }
 
 // shadow

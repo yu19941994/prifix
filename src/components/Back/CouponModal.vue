@@ -13,22 +13,22 @@
         <div class="modal-body">
           <div class="row">
             <div class="form-group col-md-6">
-              <label for="title">標題</label>
+              <label for="title">標題<span class="text-danger font--xs">(*必填)</span></label>
               <input id="title" type="text" class="form-control" placeholder="請輸入標題" v-model="tempCoupon.title">
           </div>
             <div class="form-group col-md-6">
-              <label for="percent">折價比率</label>
-              <input id="percent" type="number" class="form-control" placeholder="請輸入折價比率" v-model="tempCoupon.percent">
+              <label for="percent">折價比率<span class="text-danger font--xs">(*必填)</span></label>
+              <input id="percent" type="number" min="0" class="form-control" placeholder="請輸入折價比率" v-model="tempCoupon.percent">
             </div>
           </div>
 
           <div class="row">
             <div class="form-group col-md-6">
-              <label for="due_date">有效日期</label>
+              <label for="due_date">有效日期<span class="text-danger font--xs">(*必填)</span></label>
               <input id="due_date" type="date" min="0" class="form-control" placeholder="請輸入有效日期" v-model="tempCoupon.due_date">
             </div>
             <div class="form-group col-md-6">
-              <label for="code">優惠碼</label>
+              <label for="code">優惠碼<span class="text-danger font--xs">(*必填)</span></label>
               <input id="code" type="text" min="0" class="form-control" placeholder="請輸入優惠碼" v-model="tempCoupon.code">
             </div>
           </div>
@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <div class="modal-dialog modal-dialog-centered" v-else>
+    <!-- <div class="modal-dialog modal-dialog-centered" v-else>
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
           <h5 id="delCouponModalLabel" class="modal-title">
@@ -71,23 +71,30 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
+    <DelModal @del-item="delCoupon" :temp="tempCoupon" :action="action" :status="status" v-else></DelModal>
   </div>
 </template>
 
 <script>
 import { Modal } from 'bootstrap'
+import DelModal from './DelModal.vue'
 export default {
   props: ['isNew', 'status'],
+  components: {
+    DelModal
+  },
   data () {
     return {
       tempCoupon: {
       },
-      image: ''
+      image: '',
+      action: 'coupon'
     }
   },
   methods: {
     updateCoupon (tempCoupon) {
+      this.$emit('is-loading', true)
       let url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let method = 'post'
       if (!this.isNew) {
@@ -96,28 +103,54 @@ export default {
         url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${tempCoupon.id}`
       }
       this.tempCoupon.percent = parseInt(this.tempCoupon.percent)
-      this.tempCoupon.due_date = Date.parse(this.tempCoupon.due_date) / 1000
+      this.tempCoupon.due_date = this.DateToTimestamp(tempCoupon.due_date)
       this.$http[method](url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempCoupon })
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-coupon')
             this.modal.hide()
+            this.$swal({ title: '成功', icon: 'success' })
+            this.tempCoupon = {}
+          } else {
+            let alertStr = ''
+            if (res.data.message.includes(' title 欄位為必填')) {
+              alertStr += '標題欄位為必填,'
+            }
+            if (res.data.message.includes(' is_enabled 欄位為必填')) {
+              alertStr += '是否啟用欄位為必填,'
+            }
+            if (res.data.message.includes(' code 欄位為必填')) {
+              alertStr += '優惠碼欄位為必填,'
+            }
+            if (res.data.message.includes('percent 型別錯誤')) {
+              alertStr += '折價比率欄位為必填,'
+            }
+            if (res.data.message.includes('due_date 型別錯誤')) {
+              alertStr += '有效日期欄位為必填,'
+            }
+            this.$swal({ title: alertStr, icon: 'error' })
           }
         })
         .catch(err => console.log(err.message))
     },
     delCoupon () {
+      this.$emit('is-loading', true)
       this.axios.delete(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`)
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-coupon')
             this.modal.hide()
-            this.$swal('Success')
+            this.$swal({ title: '刪除成功', icon: 'success' })
           }
         })
         .catch(err => console.log(err))
+    },
+    DateToTimestamp (date) {
+      return (Date.parse(date) / 1000)
     }
   },
   mounted () {

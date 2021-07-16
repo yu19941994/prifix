@@ -36,8 +36,8 @@ export default {
       this.axios.post(url)
         .then(res => {
           console.log(res)
-          document.cookie = 'hexToken=;expires=;'
-          alert('token已清除')
+          document.cookie = 'myToken=;expires=;'
+          this.$swal({ title: '已登出', icon: 'success' })
           this.$router.push('/login')
         })
         .catch(err => console.log(err))

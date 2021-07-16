@@ -8,7 +8,7 @@
       <!--hi-->
       <ul class="nav flex-column mb-2 align-items-center">
         <li class="nav-item">
-          <router-link to="/admin/products" class="text-decoration-none">
+          <router-link to="/admin" class="text-decoration-none">
             <a href="#" class="nav-link text-white font--sm text-decoration-none d-flex align-items-center"
               :class="{'active': choose === 'p'}"
               @click="choose='p'">

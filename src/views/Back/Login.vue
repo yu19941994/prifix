@@ -44,7 +44,7 @@ export default {
             // this.errorAlert = false
             const { token, expired } = res.data
             document.cookie = `myToken = ${token}; expires = ${new Date(expired)}`
-            this.$router.push('/admin/products')
+            this.$router.push('/admin')
           } else {
             this.errorAlert = true
           }

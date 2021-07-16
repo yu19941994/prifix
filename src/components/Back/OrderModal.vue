@@ -36,18 +36,18 @@
               <label for="is_paid">是否付款</label>
               <div class="input-group mb-0">
                 <select class="form-select" id="is_paid" v-model="tempOrder.is_paid">
-                  <option value="ture">是</option>
+                  <option value="true">是</option>
                   <option value="false">否</option>
                 </select>
               </div>
             </div>
             <div class="col-md-4">
               <label for="paid_date">付款日期</label>
-              <input id="paid_date" type="date" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.payment_method">
+              <input id="paid_date" type="date" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.paid_date">
             </div>
             <div class="col-md-4">
               <label for="payment_method">付款方式</label>
-              <input id="payment_method" type="text" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.create_at">
+              <input id="payment_method" type="text" class="form-control" placeholder="請輸入付款方式" v-model="tempOrder.payment_method">
             </div>
           </div>
           <div class="form-group">
@@ -65,54 +65,42 @@
         </div>
       </div>
     </div>
-    <div class="modal-dialog modal-dialog-centered" v-else>
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="delOrderModalLabel" class="modal-title">
-            <span v-if="status === 'delAll'">刪除全部</span>
-            <span v-else>刪除訂單</span>
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          是否刪除
-          <strong class="text-danger"></strong> 列表(刪除後將無法恢復)。
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="delOrder">
-            確認刪除
-          </button>
-        </div>
-      </div>
-    </div>
+    <DelModal @del-item="delOrder" :temp="tempOrder" :action="action" :status="status" v-else></DelModal>
   </div>
 </template>
 
 <script>
 import { Modal } from 'bootstrap'
+import DelModal from './DelModal.vue'
 export default {
   props: ['isDeleteAll', 'status'],
+  components: {
+    DelModal
+  },
   data () {
     return {
       tempOrder: {
       },
-      date: new Date()
+      date: new Date(),
+      action: 'order'
     }
   },
   methods: {
     updateOrder (tempOrder) {
+      this.$emit('is-loading', true)
       console.log(tempOrder)
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/order/${tempOrder.id}`
       this.tempOrder.total = parseInt(this.tempOrder.total)
+      this.tempOrder.is_paid === 'true' ? this.tempOrder.is_paid = true : this.tempOrder.is_paid = false
+      this.tempOrder.paid_date = this.DateToTimestamp(this.tempOrder.paid_date)
       this.axios.put(url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempOrder })
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-order')
             this.modal.hide()
+            this.$swal({ title: '成功', icon: 'success' })
           } else {
             alert('編輯有誤')
           }
@@ -120,26 +108,25 @@ export default {
         .catch(err => console.log(err.message))
     },
     delOrder () {
-      let url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempProduct.id}`
+      this.$emit('is-loading', true)
+      let url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
       if (this.status === 'delAll') {
         url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/orders/all`
       }
       this.axios.delete(url)
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-order')
             this.modal.hide()
-            this.$swal('Success')
+            this.$swal({ title: '刪除成功', icon: 'success' })
           }
         })
         .catch(err => console.log(err))
-    }
-  },
-  computed: {
-    timestampToDate () {
-      const dd = new Date(this.due_date * 1000)
-      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
+    },
+    DateToTimestamp (date) {
+      return (Date.parse(date) / 1000)
     }
   },
   mounted () {

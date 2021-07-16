@@ -1,8 +1,6 @@
 <template>
   <div class="container-fluid">
     <loading v-model:active="isLoading"
-                :can-cancel="true"
-                :on-cancel="onCancel"
                 :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 文章列表
@@ -29,9 +27,9 @@
         <tbody>
           <tr v-for="item of articles" :key="item.id">
             <th scope="row">{{ item.author }}</th>
-            <td>{{ adjustDate(item.create_at) }}</td>
-            <td>{{ item.title}}</td>
-            <td>{{ item.isPublic === 'true' ? '是' : '否' }}</td>
+            <td>{{ timestampToDate(item.create_at) }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.isPublic ? '是' : '否' }}</td>
             <td>{{ item.tag }}</td>
             <td>{{ item.description }}</td>
             <td>
@@ -49,7 +47,7 @@
       </table>
       <PaginationCom :page="pagination" @get-page="getArticle"></PaginationCom>
     </div>
-    <ArticleModalCom ref="modal" @get-article="getArticle" :is-new="isNew" :status="status"></ArticleModalCom>
+    <ArticleModalCom ref="modal" @get-article="getArticle" :is-new="isNew" :status="status" @is-loading="isLoadingHandler"></ArticleModalCom>
   </div>
 </template>
 
@@ -69,7 +67,10 @@ export default {
       articles: [],
       pagination: {},
       isNew: false,
-      status: ''
+      status: '',
+      singleArticle: {},
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -87,17 +88,44 @@ export default {
         })
         .catch(err => console.log(err))
     },
-    adjustStatus (isNew, item, status) {
+    async getSingleArticle (item) {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/article/${item.id}`
+      const vm = this
+      try {
+        const res = await vm.axios.get(url)
+        this.singleArticle = res.data.article
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async adjustStatus (isNew, item, status) {
       this.isNew = isNew
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
-      this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : JSON.parse(JSON.stringify(item))
-      this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
+      if (item && this.status === 'put') {
+        await this.getSingleArticle(item)
+        const tempItem = JSON.parse(JSON.stringify(this.singleArticle))
+        tempItem.create_at = this.timestampToDate(tempItem.create_at)
+        this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : tempItem
+        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
+      }
+      if (item && this.status === 'delete') {
+        this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : JSON.parse(JSON.stringify(item))
+        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
+      }
     },
-    adjustDate (date) {
-      const dd = new Date(date * 1000)
-      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
+    timestampToDate (timestamp) {
+      if (timestamp) {
+        const dd = new Date(timestamp * 1000)
+        return `${dd.getFullYear()}-${this.adjustZero(dd.getMonth() + 1)}-${this.adjustZero(dd.getDate())}`
+      }
+    },
+    adjustZero (num) {
+      return num < 10 ? `0${num}` : `${num}`
+    },
+    isLoadingHandler (boolean) {
+      boolean === true ? this.isLoading = true : this.isLoading = false
     }
   },
   created () {

@@ -46,28 +46,28 @@
             </div>
             <div class="col-sm-8">
               <div class="form-group">
-                <label for="title">標題</label>
+                <label for="title">標題<span class="text-danger font--xs">(*必填)</span></label>
                 <input id="title" type="text" class="form-control" placeholder="請輸入標題" v-model="tempProduct.title">
               </div>
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="category">分類</label>
+                  <label for="category">分類<span class="text-danger font--xs">(*必填)</span></label>
                   <input id="category" type="text" class="form-control" placeholder="請輸入分類" v-model="tempProduct.category">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="unit">單位</label>
+                  <label for="unit">單位<span class="text-danger font--xs">(*必填)</span></label>
                   <input id="unit" type="text" class="form-control" placeholder="請輸入單位" v-model="tempProduct.unit">
                 </div>
               </div>
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="origin_price">原價</label>
+                  <label for="origin_price">原價<span class="text-danger font--xs">(*必填)</span></label>
                   <input id="origin_price" type="number" min="0" class="form-control" placeholder="請輸入原價" v-model="tempProduct.origin_price">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="price">售價</label>
+                  <label for="price">售價<span class="text-danger font--xs">(*必填)</span></label>
                   <input id="price" type="number" min="0" class="form-control" placeholder="請輸入售價" v-model="tempProduct.price">
                 </div>
               </div>
@@ -102,42 +102,26 @@
         </div>
       </div>
     </div>
-    <div class="modal-dialog modal-dialog-centered" v-else>
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="delProductModalLabel" class="modal-title">
-            <span>刪除產品</span>
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          是否刪除
-          <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="delProduct">
-            確認刪除
-          </button>
-        </div>
-      </div>
-    </div>
+    <DelModal @del-item="delProduct" :temp="tempProduct" :action="action" :status="status" v-else></DelModal>
   </div>
 </template>
 
 <script>
 import { Modal } from 'bootstrap'
+import DelModal from './DelModal.vue'
 export default {
-  props: ['isNew', 'status'],
+  props: ['isNew', 'status', 'is-loading'],
+  components: {
+    DelModal
+  },
   data () {
     return {
       tempProduct: {
         imageUrl: '',
         imagesUrl: []
       },
-      image: ''
+      image: '',
+      action: 'product'
     }
   },
   methods: {
@@ -145,6 +129,7 @@ export default {
       this.tempProduct.imagesUrl = ['']
     },
     updateProduct (tempProduct) {
+      this.$emit('is-loading', true)
       let url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product`
       let method = 'post'
       if (!this.isNew) {
@@ -156,11 +141,13 @@ export default {
       this.tempProduct.price = parseInt(this.tempProduct.price)
       this.$http[method](url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempProduct })
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
-            this.$swal('Success')
+            this.$swal({ title: '成功', icon: 'success' })
+            this.tempProduct = {}
           } else {
             let alertStr = ''
             if (res.data.message.includes(' title 欄位為必填')) {
@@ -184,22 +171,27 @@ export default {
             if (res.data.message.includes(' price 欄位為必填')) {
               alertStr += '售價欄位為必填,'
             }
-            alert(alertStr)
+            this.$swal({ title: alertStr, icon: 'error' })
           }
         })
         .catch(err => console.log(err.message))
     },
     delProduct () {
+      this.$emit('is-loading', true)
       this.axios.delete(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`)
         .then(res => {
+          this.$emit('is-loading', false)
           console.log(res)
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
-            this.$swal('Success')
+            this.$swal({ title: '刪除', icon: 'success' })
           }
         })
         .catch(err => console.log(err))
+    },
+    onSubmit () {
+      console.log('hi')
     }
   },
   mounted () {

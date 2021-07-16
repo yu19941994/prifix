@@ -1,7 +1,6 @@
 <template>
   <div class="bg--dark__300">
     <Navbar @toggle-side="toggleSidebar"></Navbar>
-    <!-- <Alert></Alert> -->
     <div class="position-relative">
       <Sidebar :style="{ transform:  transX}" style="transition-duration: 0.8s"></Sidebar>
       <main role="main" class="position-absolute main h-100 w-100">
@@ -36,10 +35,12 @@ export default {
             if (res.data.success) {
               this.checkSuccess = true
             } else {
-              alert(res.data.message)
+              this.$swal({ title: res.data.message, icon: 'error' })
               this.$router.push('/login')
             }
           })
+      } else {
+        this.$router.push('/login')
       }
     },
     toggleSidebar () {

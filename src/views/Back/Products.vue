@@ -1,8 +1,6 @@
 <template>
   <div class="container-fluid">
     <loading v-model:active="isLoading"
-                :can-cancel="true"
-                :on-cancel="onCancel"
                 :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 產品列表
@@ -47,7 +45,7 @@
       </table>
       <PaginationCom :page="pagination" @get-page="getProduct"></PaginationCom>
     </div>
-    <ProductModalCom ref="modal" @get-product="getProduct" :is-new="isNew" :status="status"></ProductModalCom>
+    <ProductModalCom ref="modal" @get-product="getProduct" :is-new="isNew" :status="status" @is-loading="isLoadingHandler"></ProductModalCom>
   </div>
 </template>
 
@@ -94,6 +92,9 @@ export default {
           : this.status = 'delete'
       this.$refs.modal.tempProduct = this.isNew ? { imagesUrl: [] } : JSON.parse(JSON.stringify(item))
       this.$bus.emit('tempProduct', this.$refs.modal.tempProduct)
+    },
+    isLoadingHandler (boolean) {
+      boolean === true ? this.isLoading = true : this.isLoading = false
     }
   },
   created () {

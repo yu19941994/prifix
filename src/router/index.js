@@ -36,7 +36,7 @@ const routes = [
     component: () => import('../views/Dashboard.vue'),
     children: [
       {
-        path: 'products',
+        path: '',
         component: () => import('../views/Back/Products.vue')
       },
       {
@@ -52,6 +52,10 @@ const routes = [
         component: () => import('../views/Back/Articles.vue')
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue')
   }
 ]
 

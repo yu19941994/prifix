@@ -1,8 +1,6 @@
 <template>
   <div class="container-fluid">
     <loading v-model:active="isLoading"
-                :can-cancel="true"
-                :on-cancel="onCancel"
                 :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 優惠券列表
@@ -18,20 +16,20 @@
         <thead>
           <tr class="table-warning">
             <th scope="col">優惠券名稱</th>
+            <th scope="col">優惠碼</th>
             <th scope="col" width="120">折價比率</th>
             <th scope="col" width="120">是否啟用</th>
             <th scope="col" width="180">有效期限</th>
-            <!-- <th scope="col">優惠碼</th> -->
             <th scope="col" width="180">編輯</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item of coupons" :key="item.id">
             <th scope="row">{{ item.title }}</th>
+            <td>{{ item.code }}</td>
             <td>{{ item.percent }}</td>
-            <td>{{ item.is_enabled }}</td>
-            <td>{{ adjustDate(item.due_date) }}</td>
-            <!-- <td>{{ item.is_enable }}</td> -->
+            <td>{{ item.is_enabled === 1 ? '是' : '否' }}</td>
+            <td>{{ timestampToDate(item.due_date) }}</td>
             <td>
               <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#couponModal" @click="adjustStatus(false, item, 'put')">
                 <span class="material-icons font--sm">edit</span>
@@ -47,7 +45,7 @@
       </table>
       <PaginationCom :page="pagination" @get-page="getCoupon"></PaginationCom>
     </div>
-    <CouponModalCom ref="modal" @get-coupon="getCoupon" :is-new="isNew" :status="status"></CouponModalCom>
+    <CouponModalCom ref="modal" @get-coupon="getCoupon" :is-new="isNew" :status="status" @is-loading="isLoadingHandler"></CouponModalCom>
   </div>
 </template>
 
@@ -67,7 +65,9 @@ export default {
       coupons: [],
       pagination: {},
       isNew: false,
-      status: ''
+      status: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -90,12 +90,24 @@ export default {
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
-      this.$refs.modal.tempCoupon = this.isNew ? {} : JSON.parse(JSON.stringify(item))
-      this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
+      if (item) {
+        const tempItem = JSON.parse(JSON.stringify(item))
+        tempItem.due_date = this.timestampToDate(tempItem.due_date)
+        this.$refs.modal.tempCoupon = this.isNew ? { is_enabled: 0 } : tempItem
+        this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
+      }
     },
-    adjustDate (date) {
-      const dd = new Date(date * 1000)
-      return `${dd.getFullYear()}/${dd.getMonth() + 1}/${dd.getDate()}`
+    timestampToDate (timestamp) {
+      if (timestamp) {
+        const dd = new Date(timestamp * 1000)
+        return `${dd.getFullYear()}-${this.adjustZero(dd.getMonth() + 1)}-${this.adjustZero(dd.getDate())}`
+      }
+    },
+    adjustZero (num) {
+      return num < 10 ? `0${num}` : `${num}`
+    },
+    isLoadingHandler (boolean) {
+      boolean === true ? this.isLoading = true : this.isLoading = false
     }
   },
   created () {

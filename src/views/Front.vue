@@ -13,9 +13,9 @@
             <li class="nav-item px-2">
               <router-link to="/" aria-current="page" class="text-decoration-none"><span class="nav__home nav-link active font__menu">首頁</span></router-link>
             </li>
-            <li class="nav-item px-2">
+            <!-- <li class="nav-item px-2">
               <router-link to="/blog" class="text-decoration-none"><span class="nav__home nav-link font__menu">部落格</span></router-link>
-            </li>
+            </li> -->
             <li class="nav-item px-2">
               <router-link to="/products" class="text-decoration-none"><span class="nav__home nav-link font__menu">商品</span></router-link>
             </li>

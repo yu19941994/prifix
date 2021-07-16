@@ -35,9 +35,9 @@ configure({
 setLocale('zh_TW')
 
 const options = {
-  confirmButtonColor: '#41b882',
-  cancelButtonColor: '#ff7674',
-  icon: 'success'
+  confirmButtonColor: '#5ABFDD',
+  cancelButtonColor: '#ff7674'
+  // icon: 'success'
 }
 
 const app = createApp(App)
