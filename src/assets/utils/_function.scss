@@ -14,9 +14,29 @@
 }
 
 .login__bg{ 
-  background: bg('path.png') no-repeat center center; 
+  background: bg('path.jpg') no-repeat center center; 
   background-size: cover;
   height: 100vh;
   width: 100vw;
   opacity: 0.8;
+}
+
+@function product_banner($path) {
+  @return url("~@/assets/images/product_banner.jpg");
+}
+
+.bg__product__banner{
+  background: product_banner('path.jpg') no-repeat center center; 
+  background-size: cover;
+  height: 200px;
+  width: 100vw;
+  @include media-breakpoint-up(sm) { 
+    height: 240px;
+  }
+  @include media-breakpoint-up(md) { 
+    height: 320px;
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 400px;
+  }
 }

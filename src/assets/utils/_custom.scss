@@ -124,6 +124,16 @@ body{
   font-size: 12px;
 }
 
+.font--banner{
+  font-size: 28px;
+  @include media-breakpoint-up(sm) { 
+    font-size: 40px;
+  }
+  @include media-breakpoint-up(md) { 
+    font-size: 56px;
+  }
+}
+
 // text clolr
 .text--warning{
   color: #F6BF43;
@@ -232,12 +242,16 @@ body{
 
 // hover
 .hover--success:hover, .hover--success:active{
-  background:#A3D1D1;
+  background:#CA8EFF;
   font-style: italic;
-  color: white !important;
+  border-radius: 0.25rem;
 }
 
 // opacity
 .opacity__article{
   opacity: 78%;
+}
+
+.opacity__banner{
+  opacity: 70%;
 }
