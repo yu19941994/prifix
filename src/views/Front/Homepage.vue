@@ -38,9 +38,11 @@
         <ul class="row d-flex list-unstyled">
           <li class="col-12 col-sm-6 col-md-4" v-for="item of adjustRandomProducts" :key="item.id">
             <div class="card position-relative box--shadow">
-              <span class="badge bg-warning text-white position-absolute top--10 start--10">{{ item.category }}</span>
+              <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
               <div class="p-3">
-                <img :src="item.imageUrl" class="card-img-top img__card" alt="...">
+                <router-link class="img__card overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
+                  <img :src="item.imageUrl" class="card-img-top img__card__inside" alt="...">
+                </router-link>
               </div>
               <div class="card-body pt-1">
                 <h3 class="card-title text-center h5">{{ item.title }}</h3>
@@ -52,12 +54,12 @@
                     </span>
                     放購物車
                   </a>
-                  <a href="#" class="btn btn-secondary d-flex align-items-center">
+                  <router-link href="#" class="btn btn-secondary d-flex align-items-center" :to="`/productDetail/${item.id}`">
                     <span class="material-icons font--sm">
                       settings_suggest
                     </span>
                     商品詳細
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -85,11 +87,11 @@
     <!-- article -->
     <div class="container-fluid py-5">
       <div class="position-relative mb-5" v-if="articles">
-        <d-flex class="justify-content-start">
+        <div class="d-flex justify-content-start">
           <div class="w--articlePhoto">
             <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-right" data-aos-duration="1400">
           </div>
-        </d-flex>
+        </div>
         <div class="w--article bg--green opacity__article position-absolute top-0 end-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
           <h3 class="text--black text-center mb-3" v-if="articles && articles[0] && articles[0].title">{{ articles[0].title }}</h3>
           <p class="text--black text-center" v-if="articles && articles[0] && articles[0].description">{{ articles[0].description }}</p>
@@ -120,7 +122,7 @@
       <div class="container-lg">
         <h2 class="h4 text-white text-center py-2">名人的挺同語錄</h2>
         <div class="row">
-           <swiper
+          <swiper
             :slides-per-view="slideNum"
             :space-between="50"
             @swiper="onSwiper"
@@ -232,9 +234,6 @@ export default {
           console.log(this.articles)
         })
         .catch(err => console.log(err))
-    },
-    onSubmit () {
-      console.log('ya')
     }
   },
   async mounted () {

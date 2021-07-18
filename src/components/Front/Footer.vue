@@ -88,3 +88,13 @@
     </div>
   </footer>
 </template>
+
+<script>
+export default {
+  methods: {
+    onSubmit () {
+      console.log('ya')
+    }
+  }
+}
+</script>

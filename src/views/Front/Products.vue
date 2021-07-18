@@ -24,7 +24,7 @@
    <div class="container-lg">
      <div class="row">
        <div class="col-12 col-md-3 mb-4 mb-md-0">
-         <ul class="list-unstyled list-group">
+        <ul class="list-unstyled list-group position-sticky top--list d-none d-md-block">
           <li class="list-group-item border border-dark" v-for="(item, key, index) of category" :key="index"
           :class="{ 'active': choose === key }" @click="chooseHandler(key)">
             <p class="text-center mb-0">{{ key }}（{{ item }}）</p>
@@ -33,18 +33,23 @@
        </div>
        <div class="col-12 col-md-9">
           <div class="d-flex justify-content-end">
-            <div class="input-group mb-3 w-50">
+            <div class="input-group mb-3 w--search">
               <label for="videoName"></label>
               <input type="text" class="form-control rounded" placeholder="&#128269;  請輸入片名" aria-label="videoName"
               aria-describedby="button" id="videoName" v-model="search">
             </div>
           </div>
+          <select name="list" id="list" @change="selectHandler($event)" class="form-select d-md-none border-1 border-dark mb-5" aria-label="list select">
+            <option :value="key" v-for="(item, key, index) of category" :key="index">{{ key }}</option>
+          </select>
           <ul class="row list-unstyled">
             <li class="col-12 col-sm-6 col-xl-4 mb-3" v-for="item of searchProducts" :key="item.id">
               <div class="card position-relative box--shadow">
-                <span class="badge bg-warning text-white position-absolute top--10 start--10">{{ item.category }}</span>
+                <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
                 <div class="p-3">
-                  <img :src="item.imageUrl" class="card-img-top img__card__products" alt="...">
+                  <router-link class="img__card__products overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
+                    <img :src="item.imageUrl" class="card-img-top img__card__products__inside" alt="...">
+                  </router-link>
                 </div>
                 <div class="card-body pt-1">
                   <h3 class="card-title text-center h5">{{ item.title }}</h3>
@@ -56,19 +61,19 @@
                       </span>
                       放購物車
                     </a>
-                    <a href="#" class="btn btn-secondary d-flex align-items-center">
+                    <router-link href="#" class="btn btn-secondary d-flex align-items-center" :to="`/productDetail/${item.id}`">
                       <span class="material-icons font--sm">
                         settings_suggest
                       </span>
                       商品詳細
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </div>
             </li>
           </ul>
           <div class="d-flex justify-content-end">
-            <Pagination :page="pagination" @get-page="getProducts" v-if="search === ''"></Pagination>
+            <Pagination :page="pagination" @get-page="getProducts" v-if="search === '' && choose === '全部商品'"></Pagination>
           </div>
        </div>
      </div>
@@ -130,6 +135,10 @@ export default {
     chooseHandler (key) {
       this.choose = key
       console.log(this.filterProducts)
+    },
+    selectHandler (e) {
+      this.choose = e.target.value
+      console.log(e.target.value)
     }
   },
   computed: {

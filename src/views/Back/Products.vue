@@ -19,6 +19,8 @@
             <th scope="col">產品名稱</th>
             <th scope="col" width="120">原價</th>
             <th scope="col" width="120">售價</th>
+            <th scope="col" width="100">年份</th>
+            <th scope="col" width="100">節目分級</th>
             <th scope="col" width="100">是否啟用</th>
             <th scope="col" width="180">編輯</th>
           </tr>
@@ -29,6 +31,8 @@
             <td>{{ item.title }}</td>
             <td>{{ item.origin_price }}</td>
             <td>{{ item.price }}</td>
+            <td>{{ item.year }}</td>
+            <td>{{ item.range === 'g' ? '普通級' :  item.range === 'pg' ? '保護級' : item.range === 'pg-13' ? '輔導級' : item.range === 'r' ? '限制級' : ''}}</td>
             <td>{{ item.is_enabled === 1 ? '是' : '否' }}</td>
             <td>
               <button type="button" class="btn btn-sm btn-light me-1" data-bs-toggle="modal" data-bs-target="#productModal" @click="adjustStatus(false, item, 'put')">

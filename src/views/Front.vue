@@ -1,9 +1,15 @@
 <template>
-  <div class="position-relative">
+  <div>
     <Navbar></Navbar>
+     <div class="contain">
+      <router-view/>
+      <Footer></Footer>
+     </div>
   </div>
-  <router-view/>
-  <Footer></Footer>
+  <!-- <div class="contain">
+    <router-view/>
+  </div>
+  <Footer></Footer> -->
 </template>
 
 <script>

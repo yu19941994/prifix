@@ -29,9 +29,19 @@
   }
 }
 
+.img__card__suggest{
+  height: 17rem; 
+  object-fit: cover;
+  @include media-breakpoint-up(md) { 
+    height: 13rem; 
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 16rem; 
+  }
+}
+
 .img__card__products{
   height: 20rem; 
-  object-fit: cover;
   @include media-breakpoint-up(sm) { 
     height: 14rem; 
   }
@@ -43,6 +53,49 @@
   }
   @include media-breakpoint-up(xl) { 
     height: 18rem; 
+  }
+}
+
+.img__card__products, .img__card, .img__card__suggest{
+  &__inside{
+    transition: all 0.5s ease-out;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  &:before{
+    content: '';
+    z-index: 100;
+    opacity: 0;
+    transition: all .2s linear;
+    background: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.img__card:hover{
+  &:before{
+    opacity: 0.4;
+  }
+  .img__card__inside{
+    transform: scale(1.2, 1.2);
+  }
+}
+
+.img__card__products:hover{
+  &:before{
+    opacity: 0.4;
+  }
+  .img__card__products__inside{
+    transform: scale(1.2, 1.2);
   }
 }
 
@@ -69,5 +122,16 @@
   }
   @include media-breakpoint-up(xl) { 
     height: 340px;
+  }
+}
+
+.img__productDetail{
+  height: 700px;
+  object-fit: cover;
+  @include media-breakpoint-up(md) { 
+    height: 400px;
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 500px;
   }
 }

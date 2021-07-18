@@ -72,16 +72,33 @@
                 </div>
               </div>
               <hr>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="year">年份</label>
+                  <input id="year" type="number" min="0" class="form-control" placeholder="請輸入出版年份" v-model="tempProduct.year">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="range">節目分級</label>
+                  <div class="input-group mb-0">
+                    <select class="form-select" id="range" v-model="tempProduct.range">
+                      <option :value="'g'">普通級</option>
+                      <option :value="'pg'">保護級</option>
+                      <option :value="'pg-13'">輔導級</option>
+                      <option :value="'r'">限制級</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
               <div class="form-group">
                 <label for="description">產品描述</label>
                 <textarea id="description" type="text" class="form-control" placeholder="請輸入產品描述" v-model="tempProduct.description">
-                    </textarea>
+                </textarea>
               </div>
               <div class="form-group">
                 <label for="content">說明內容</label>
                 <textarea id="content" type="text" class="form-control" placeholder="請輸入說明內容" v-model="tempProduct.content">
-                    </textarea>
+                </textarea>
               </div>
               <div class="form-group">
                 <div class="form-check">
