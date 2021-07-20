@@ -167,19 +167,6 @@ export default {
         return this.filterProducts
       }
     }
-    // filterPage () {
-    //   if (this.search !== '') {
-    //     return {
-    //       category: null,
-    //       current_page: 1,
-    //       has_next: false,
-    //       has_pre: false,
-    //       total_pages: 1
-    //     }
-    //   } else {
-    //     return this.pagination
-    //   }
-    // }
   },
   created () {
     this.getAllProducts()

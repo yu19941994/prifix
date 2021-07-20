@@ -52,7 +52,7 @@
             </textarea>
           </div>
           <div class="form-group">
-            <label for="tag">標籤</label>
+            <label for="tag">標籤<span class="text-danger font--xs">(*請以頓號做分隔)</span></label>
             <input id="tag" type="text" class="form-control" placeholder="請輸入文章標籤" v-model="tempArticle.tag">
           </div>
         </div>

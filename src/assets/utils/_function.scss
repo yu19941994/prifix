@@ -81,3 +81,23 @@
   }
 }
 
+@function article_banner($path) {
+  @return url("~@/assets/images/product_banner6.jpg");
+}
+
+.bg__article__banner{
+  background: article_banner('path.jpg') no-repeat center center; 
+  background-size: cover;
+  height: 200px;
+  width: 100vw;
+  @include media-breakpoint-up(sm) { 
+    height: 240px;
+  }
+  @include media-breakpoint-up(md) { 
+    height: 320px;
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 400px;
+  }
+}
+

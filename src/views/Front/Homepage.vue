@@ -95,10 +95,10 @@
         <div class="w--article bg--green opacity__article position-absolute top-0 end-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
           <h3 class="text--black text-center mb-3" v-if="articles && articles[0] && articles[0].title">{{ articles[0].title }}</h3>
           <p class="text--black text-center" v-if="articles && articles[0] && articles[0].description">{{ articles[0].description }}</p>
-          <button class="btn btn-outline-dark d-flex align-items-center">
+          <router-link class="btn btn-outline-dark d-flex align-items-center" :to="`/articleDetail/${article1}`">
             <span class="material-icons">feed</span>
             完整文章
-          </button>
+          </router-link>
         </div>
       </div>
       <div class="position-relative" v-if="articles">
@@ -110,10 +110,10 @@
         <div class="w--article bg--yellow opacity__article position-absolute top-0 start-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
           <h3 class="text--black text-center mb-3" v-if="articles && articles[1] && articles[1].title">{{ articles[1].title }}</h3>
           <p class="text--black text-center" v-if="articles && articles[1] && articles[1].description">{{ articles[1].description }}</p>
-          <button class="btn btn-outline-dark d-flex align-items-center">
+          <router-link class="btn btn-outline-dark d-flex align-items-center" :to="`/articleDetail/${article2}`">
             <span class="material-icons">feed</span>
             完整文章
-          </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -171,7 +171,9 @@ export default {
       fullWidth: 0,
       famousQuotes,
       slideNum: 0,
-      articles: []
+      articles: [],
+      article1: '',
+      article2: ''
     }
   },
   components: {
@@ -232,6 +234,8 @@ export default {
           console.log(res)
           this.articles = res.data.articles
           console.log(this.articles)
+          this.article1 = res.data.articles[0].id
+          this.article2 = res.data.articles[1].id
         })
         .catch(err => console.log(err))
     }
