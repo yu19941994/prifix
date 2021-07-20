@@ -66,7 +66,7 @@
                     +
                   </a>
                 </div>
-                <a href="#" class="btn btn--warning d-flex align-items-center w--num justify-content-center">
+                <a href="#" class="btn btn--warning d-flex align-items-center w--num justify-content-center" @click.prevent="addCart">
                   <span class="material-icons font--sm">
                     shopping_basket
                   </span>
@@ -192,6 +192,16 @@ export default {
     },
     onSlideChange () {
       console.log('slide change')
+    },
+    addCart () {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
+      this.axios.post(url, { data: { product_id: this.product.id, qty: this.buyNum } })
+        .then(res => {
+          console.log(res)
+          this.$swal({ title: '成功加入購物車', icon: 'success' })
+          this.buyNum = 1
+        })
+        .catch(err => console.log(err))
     }
   },
   computed: {

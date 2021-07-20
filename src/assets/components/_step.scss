@@ -1,0 +1,13 @@
+.step{
+  &::before{
+    content: '';
+    border-top: 2px solid #000;
+    width: 55%;
+    position: absolute;
+    bottom: 44px;
+    z-index: 100;
+  }
+  &__label{
+    z-index: 200;
+  }
+}

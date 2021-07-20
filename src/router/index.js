@@ -26,6 +26,15 @@ const routes = [
         component: () => import('../views/Front/Cart.vue')
       },
       {
+        path: '/form',
+        component: () => import('../views/Front/Form.vue')
+      },
+      {
+        path: '/paid',
+        name: 'paid',
+        component: () => import('../views/Front/Paid.vue')
+      },
+      {
         path: '/coupon',
         component: () => import('../views/Front/Coupon.vue')
       }

@@ -1,5 +1,175 @@
 <template>
   <div>
-    Cart
+    <!-- banner -->
+    <div class="bg__cart__banner mb-5">
+     <div class="row d-flex justify-content-center align-items-center h-100">
+       <div class="col-6 col-lg-4">
+         <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
+           <h2 class="text-center font--banner mb-0">購物車列表</h2>
+         </div>
+       </div>
+     </div>
+    </div>
+    <div class="container">
+      <!-- step -->
+      <div class="position-relative mb-5" v-if="carts.length !== 0">
+        <ul class="list-unstyled d-flex w-100 justify-content-evenly step">
+          <li class="d-flex flex-column align-items-center">
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-warning">1</span>
+            <span class="p mb-0">確認商品</span>
+          </li>
+          <li class="d-flex flex-column align-items-center">
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-white">2</span>
+            <span class="p mb-0">填寫資料</span>
+          </li>
+          <li class="d-flex flex-column align-items-center">
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-white">3</span>
+            <span class="p mb-0">付款結帳</span>
+          </li>
+        </ul>
+      </div>
+      <!-- shoppinglist -->
+      <div class="pt-3 pb-5">
+        <div class="bg--light box--shadow rounded p-4 mb-5">
+          <!-- 無商品的話 -->
+          <div class="d-flex flex-column align-items-center" v-if="carts.length === 0">
+            <h3 class="h2 text-center mb-4">此購物車內無商品</h3>
+            <router-link class="btn btn--warning d-flex align-items-center w-25 justify-content-center" to="/products">
+              <span class="material-icons">shopping_bag</span>
+              購物去
+            </router-link>
+          </div>
+          <div class="d-flex justify-content-end mb-3" v-if="carts.length !== 0">
+            <button class="btn btn--purple" @click="deleteAllCarts">
+              <span class="material-icons font--sm">delete</span>
+              刪除全部
+            </button>
+          </div>
+          <div class="table-responsive" v-if="carts.length !== 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="120" class="text-center">縮圖</th>
+                  <th scope="col" class="text-center">商品名稱</th>
+                  <th scope="col" width="150" class="text-center">數量</th>
+                  <th scope="col" width="100" class="text-center">單價</th>
+                  <th scope="col" class="text-center">金額</th>
+                  <th scope="col" class="text-center">刪除</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item of carts" :key="item.id">
+                  <th scope="row" class="text-center">
+                    <img :src="item.product.imageUrl" alt="" class="img__cart">
+                  </th>
+                  <td class="text-center">{{ item.product.title }}</td>
+                  <td class="text-center">
+                    <span class="d-md-none">{{ item.qty }}</span>
+                    <div class="d-none d-md-flex justify-content-center">
+                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary " @click.prevent="updateCart('minus', item)">
+                        -
+                      </a>
+                      <p class="border border-1 border-dark text-dark text-center input--num__cart mb-0 d-flex justify-content-center align-items-center">{{ item.qty }}</p>
+                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary " @click.prevent="updateCart('plus', item)">
+                        +
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-center">NT${{ item.product.price }}</td>
+                  <td class="text-center">NT${{ item.total }}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger text-white" @click="deleteCart(item)">
+                        <span class="material-icons font--sm">delete</span>
+                        <span class="d-none d-md-inline-block">刪除</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex flex-column align-items-end pe-4 mb-5" v-if="carts.length !== 0">
+            <p class="h6">商品金額：NT${{ total }}</p>
+            <p class="h5 text--purple">最終金額：NT${{ finalTotal }}</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between" v-if="carts.length !== 0">
+          <router-link to="/products" class="btn btn-outline-dark d-flex align-items-center">
+            <span class="material-icons">chevron_left</span>
+            返回購物
+          </router-link>
+          <router-link to="/form" class="btn btn-outline-dark d-flex align-items-center">
+            填寫資料
+            <span class="material-icons">navigate_next</span>
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      carts: [],
+      finalTotal: 0,
+      total: 0
+    }
+  },
+  methods: {
+    getCarts () {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
+      this.axios.get(url)
+        .then(res => {
+          console.log(res)
+          if (res.data.success) {
+            this.carts = res.data.data.carts
+            this.finalTotal = res.data.data.final_total
+            this.total = res.data.data.total
+          }
+        })
+    },
+    updateCart (action, item) {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      if (this.buyNum > 1) {
+        action === 'plus' ? (item.qty += 1) : (item.qty -= 1)
+      } else {
+        action === 'plus' ? (item.qty += 1) : (item.qty -= 1)
+      }
+      this.axios.put(url, { data: { product_id: item.id, qty: item.qty } })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
+    },
+    deleteCart (item) {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      this.axios.delete(url)
+        .then(res => {
+          console.log(res)
+          this.$swal({ title: '已成功刪除該商品', icon: 'success' })
+          this.getCarts()
+        })
+        .catch(err => console.log(err))
+    },
+    deleteAllCarts () {
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/carts`
+      this.axios.delete(url)
+        .then(res => {
+          console.log(res)
+          this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
+          this.getCarts()
+        })
+        .catch(err => console.log(err))
+    }
+  },
+  computed: {
+    buyNum () {
+      return this.qty
+    }
+  },
+  created () {
+    this.getCarts()
+  }
+}
+</script>
