@@ -127,6 +127,7 @@ export default {
             }
             this.$swal({ title: alertStr, icon: 'error' })
           }
+          this.tempArticle = {}
         })
         .catch(err => console.log(err.message))
     },

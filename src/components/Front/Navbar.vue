@@ -38,7 +38,8 @@
               @click="choose='save'">bookmark</span>
             </router-link>
           </li>
-          <li class="nav-item px-2">
+          <li class="nav-item px-2 position-relative">
+            <div class="bg-danger p--circle rounded-circle text-center font--xs position-absolute end--4" v-if="carts.length !== 0">{{ carts.length }}</div>
             <router-link to="/cart" class="nav-link text-decoration-none">
               <span class="material-icons nav__home"
               :class="{'active': choose === 'cart'}"
@@ -55,8 +56,26 @@
 export default {
   data () {
     return {
-      choose: 'h'
+      choose: 'h',
+      carts: []
     }
+  },
+  methods: {
+    getCarts () {
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
+      this.axios.get(url)
+        .then(res => {
+          this.isLoading = false
+          console.log(res)
+          if (res.data.success) {
+            this.carts = res.data.data.carts
+          }
+        })
+    }
+  },
+  created () {
+    this.getCarts()
   }
 }
 </script>

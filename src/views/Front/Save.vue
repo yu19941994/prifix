@@ -31,6 +31,14 @@
     </nav>
     <div class="py-5">
       <div class="bg--light box--shadow rounded p-4 mb-5">
+        <!-- 無商品的話 -->
+        <div class="d-flex flex-column align-items-center" v-if="filterProducts.length === 0">
+          <h3 class="h2 text-center mb-4">我的珍藏清單中無商品</h3>
+          <router-link class="btn btn--warning d-flex align-items-center w-25 justify-content-center" to="/products">
+            <span class="material-icons">shopping_bag</span>
+            查看商品去
+          </router-link>
+        </div>
         <ul class="row d-flex list-unstyled">
           <li class="col-12 col-md-6 col-lg-4 mb-3" v-for="item of filterProducts" :key="item.id">
             <div class="card position-relative box--shadow">

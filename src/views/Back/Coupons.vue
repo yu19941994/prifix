@@ -90,10 +90,14 @@ export default {
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
+      if (this.isNew) {
+        this.$refs.modal.tempCoupon = { is_enabled: 0 }
+        this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
+      }
       if (item) {
         const tempItem = JSON.parse(JSON.stringify(item))
         tempItem.due_date = this.timestampToDate(tempItem.due_date)
-        this.$refs.modal.tempCoupon = this.isNew ? { is_enabled: 0 } : tempItem
+        this.$refs.modal.tempCoupon = tempItem
         this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
       }
     },

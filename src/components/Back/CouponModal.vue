@@ -104,6 +104,7 @@ export default {
       }
       this.tempCoupon.percent = parseInt(this.tempCoupon.percent)
       this.tempCoupon.due_date = this.DateToTimestamp(tempCoupon.due_date)
+      this.tempCoupon.is_enabled === 1 ? this.tempCoupon.is_enabled = 1 : this.tempCoupon.is_enabled = 0
       this.$http[method](url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempCoupon })
         .then(res => {
           this.$emit('is-loading', false)

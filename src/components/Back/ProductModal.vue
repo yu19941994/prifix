@@ -14,8 +14,8 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="imageUrl">主要圖片</label>
-                <input v-model="tempProduct.imageUrl" type="text" class="form-control" placeholder="請輸入圖片連結">
+                <label for="mainImageUrl">主要圖片</label>
+                <input v-model="tempProduct.imageUrl" type="text" class="form-control" placeholder="請輸入圖片連結" id="mainImageUrl">
                 <img class="img-fluid" :src="tempProduct.imageUrl">
               </div>
               <div class="mb-1 font--sm">多圖新增</div>
@@ -23,7 +23,7 @@
                 <div class="mb-1" v-for="(img,key) in tempProduct.imagesUrl" :key="img">
                   <div class="form-group">
                     <label for="imageUrl">圖片網址</label>
-                    <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="tempProduct.imagesUrl[key]">
+                    <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="tempProduct.imagesUrl[key]" id="imageUrl">
                   </div>
                   <img class="img-fluid" :src="image">
                 </div>
@@ -167,6 +167,7 @@ export default {
             this.tempProduct = {}
           } else {
             let alertStr = ''
+            // const alertStr = res.data.message.join('、')
             if (res.data.message.includes(' title 欄位為必填')) {
               alertStr += '標題欄位為必填,'
             }

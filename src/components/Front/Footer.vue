@@ -81,9 +81,9 @@
     <div class="bg--black py-3">
       <div class="text-center text-white font--sm d-flex justify-content-center align-items-center flex-column flex-sm-row">
         <span class="me-2 mb-2 mb-sm-0">Copyright  ©  2021  HsienYu  個人作業使用，無商業行為</span>
-        <router-link to="/login" class="btn btn-outline-light btn-sm d-flex align-items-center">
+        <router-link to="/admin" class="btn btn-outline-light btn-sm d-flex align-items-center">
           <span class="material-icons me-1">face</span>
-          <span>登入後台</span>
+          <span>進入後台</span>
         </router-link>
       </div>
     </div>

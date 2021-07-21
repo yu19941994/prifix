@@ -103,15 +103,19 @@ export default {
       this.isNew ? this.status = 'post'
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
+      if (this.status === 'post') {
+        this.$refs.modal.tempArticle = { imageUrl: '' }
+        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
+      }
       if (item && this.status === 'put') {
         await this.getSingleArticle(item)
         const tempItem = JSON.parse(JSON.stringify(this.singleArticle))
         tempItem.create_at = this.timestampToDate(tempItem.create_at)
-        this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : tempItem
+        this.$refs.modal.tempArticle = tempItem
         this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
       }
       if (item && this.status === 'delete') {
-        this.$refs.modal.tempArticle = this.isNew ? { imgUrl: [] } : JSON.parse(JSON.stringify(item))
+        this.$refs.modal.tempArticle = JSON.parse(JSON.stringify(item))
         this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
       }
     },

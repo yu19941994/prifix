@@ -15,6 +15,7 @@
         <label for="password" class="form-label font--sm">密碼</label>
         <input type="password" class="form-control" id="password" placeholder="請輸入密碼" v-model="userprofile.password">
       </div>
+      <p class="mb-0 text-danger font--sm text-center" v-if="nullAlert">帳號或密碼皆需輸入唷！</p>
       <p class="mb-0 text-danger font--sm text-center" v-if="errorAlert">帳號或密碼輸入有誤唷！</p>
       <div class="d-flex justify-content-between px-4 py-3">
         <button type="button" class="btn btn-secondary w-47" @click="goToFront">返回前台</button>
@@ -32,24 +33,30 @@ export default {
         username: '',
         password: ''
       },
+      nullAlert: false,
       errorAlert: false
     }
   },
   methods: {
     login () {
-      const url = `${process.env.VUE_APP_URL}/admin/signin`
-      this.axios.post(url, this.userprofile)
-        .then(res => {
-          if (res.data.success) {
-            // this.errorAlert = false
-            const { token, expired } = res.data
-            document.cookie = `myToken = ${token}; expires = ${new Date(expired)}`
-            this.$router.push('/admin')
-          } else {
-            this.errorAlert = true
-          }
-        })
-        .catch(err => console.log(err))
+      if (this.userprofile.username === '' || this.userprofile.password === '') {
+        this.nullAlert = true
+      } else {
+        this.nullAlert = false
+        const url = `${process.env.VUE_APP_URL}/admin/signin`
+        this.axios.post(url, this.userprofile)
+          .then(res => {
+            if (res.data.success) {
+              // this.errorAlert = false
+              const { token, expired } = res.data
+              document.cookie = `myToken = ${token}; expires = ${new Date(expired)}`
+              this.$router.push('/admin')
+            } else {
+              this.errorAlert = true
+            }
+          })
+          .catch(err => console.log(err))
+      }
     },
     goToFront () {
       this.$router.push('/')

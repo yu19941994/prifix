@@ -15,7 +15,7 @@
       <table class="table table-dark">
         <thead>
           <tr class="table--purple">
-            <th scope="col" width="120">訂單編號</th>
+            <th scope="col" width="150">訂單編號</th>
             <th scope="col" width="180">客戶姓名</th>
             <th scope="col" width="120">訂單建立日期</th>
             <th scope="col" width="120">總價</th>
@@ -27,7 +27,7 @@
         </thead>
         <tbody>
           <tr v-for="item of orders" :key="item.id">
-            <th scope="row">{{ item.num }}</th>
+            <th scope="row">{{ item.id }}</th>
             <td>{{ item.user.name }}</td>
             <td>{{ timestampToDate(item.create_at) }}</td>
             <td>{{ item.total }}</td>
