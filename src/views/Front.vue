@@ -14,14 +14,10 @@
     </loading>
     <Navbar :carts="carts"></Navbar>
      <div class="content">
-      <router-view @goto-top="goToTop" @add-cart="addCart"/>
+      <router-view @goto-top="goToTop" @add-cart="addCart" @get-cart="getCarts" :carts="carts" :final-total="finalTotal" :total="total"/>
       <Footer @goto-top="goToTop"></Footer>
      </div>
   </div>
-  <!-- <div class="contain">
-    <router-view/>
-  </div>
-  <Footer></Footer> -->
 </template>
 
 <script>
@@ -38,7 +34,9 @@ export default {
     return {
       isLoading: false,
       fullPage: true,
-      carts: []
+      carts: [],
+      finalTotal: 0,
+      total: 0
     }
   },
   methods: {

@@ -126,34 +126,35 @@
 <script>
 import Loading from 'vue-loading-overlay'
 export default {
+  props: ['carts', 'final-total', 'total'],
   components: {
     Loading
   },
   data () {
     return {
-      carts: [],
-      finalTotal: 0,
-      total: 0,
+      // carts: [],
+      // final-total: 0,
+      // total: 0,
       isLoading: false,
       fullPage: true,
       couponValue: ''
     }
   },
   methods: {
-    getCarts () {
-      this.isLoading = true
-      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
-      this.axios.get(url)
-        .then(res => {
-          this.isLoading = false
-          console.log(res)
-          if (res.data.success) {
-            this.carts = res.data.data.carts
-            this.finalTotal = res.data.data.final_total
-            this.total = res.data.data.total
-          }
-        })
-    },
+    // getCarts () {
+    //   this.isLoading = true
+    //   const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
+    //   this.axios.get(url)
+    //     .then(res => {
+    //       this.isLoading = false
+    //       console.log(res)
+    //       if (res.data.success) {
+    //         this.carts = res.data.data.carts
+    //         this.final-total = res.data.data.final_total
+    //         this.total = res.data.data.total
+    //       }
+    //     })
+    // },
     updateCart (action, item) {
       this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
@@ -166,7 +167,7 @@ export default {
         .then(res => {
           this.isLoading = false
           console.log(res)
-          this.getCarts()
+          this.$emit('get-cart')
         })
         .catch(err => console.log(err))
     },
@@ -178,7 +179,7 @@ export default {
           this.isLoading = false
           console.log(res)
           this.$swal({ title: '已成功刪除該商品', icon: 'success' })
-          this.getCart()
+          this.$emit('get-cart')
         })
         .catch(err => console.log(err))
     },
@@ -190,7 +191,7 @@ export default {
           this.isLoading = false
           console.log(res)
           this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
-          this.getCart()
+          this.$emit('get-cart')
         })
         .catch(err => console.log(err))
     },
@@ -201,7 +202,7 @@ export default {
           console.log(res)
           if (res.data.success) {
             this.$swal({ title: '已套用優惠券', icon: 'success' })
-            this.getCart()
+            this.$emit('get-cart')
           } else {
             this.$swal({ title: res.data.message, icon: 'error' })
           }
@@ -215,7 +216,7 @@ export default {
     }
   },
   created () {
-    this.getCarts()
+    this.$emit('get-cart')
   }
 }
 </script>
