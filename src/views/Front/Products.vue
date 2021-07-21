@@ -71,7 +71,7 @@
                   <h3 class="card-title text-center h5">{{ item.title }}</h3>
                   <p class="card-text text-center h5 fw-bolder">${{ item.price }}</p>
                   <div class="d-flex justify-content-between">
-                    <a href="#" class="btn btn-primary d-flex align-items-center" @click.prevent="addCart(item)">
+                    <a href="#" class="btn btn-primary d-flex align-items-center" @click.prevent="$emit('add-cart', item, 1)">
                       <span class="material-icons font--sm">
                         shopping_basket
                       </span>
@@ -184,18 +184,6 @@ export default {
     selectHandler (e) {
       this.choose = e.target.value
       console.log(e.target.value)
-    },
-    addCart (item) {
-      this.isLoading = true
-      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
-      this.axios.post(url, { data: { product_id: item.id, qty: this.buyNum } })
-        .then(res => {
-          this.isLoading = false
-          console.log(res)
-          this.$swal({ title: '成功加入購物車', icon: 'success' })
-          // this.buyNum = 1
-        })
-        .catch(err => console.log(err))
     }
   },
   computed: {

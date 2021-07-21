@@ -64,7 +64,7 @@
                 <h3 class="card-title text-center h5">{{ item.title }}</h3>
                 <p class="card-text text-center h5 fw-bolder">${{ item.price }}</p>
                 <div class="d-flex justify-content-between">
-                  <a href="#" class="btn btn-primary d-flex align-items-center">
+                  <a href="#" class="btn btn-primary d-flex align-items-center" @click="$emit('add-cart', item, 1)">
                     <span class="material-icons font--sm">
                       shopping_basket
                     </span>

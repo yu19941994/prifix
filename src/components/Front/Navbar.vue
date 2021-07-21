@@ -54,28 +54,11 @@
 
 <script>
 export default {
+  props: ['carts'],
   data () {
     return {
-      choose: 'h',
-      carts: []
+      choose: ''
     }
-  },
-  methods: {
-    getCarts () {
-      this.isLoading = true
-      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
-      this.axios.get(url)
-        .then(res => {
-          this.isLoading = false
-          console.log(res)
-          if (res.data.success) {
-            this.carts = res.data.data.carts
-          }
-        })
-    }
-  },
-  created () {
-    this.getCarts()
   }
 }
 </script>

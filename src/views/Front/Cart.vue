@@ -166,6 +166,7 @@ export default {
         .then(res => {
           this.isLoading = false
           console.log(res)
+          this.getCarts()
         })
         .catch(err => console.log(err))
     },
@@ -177,7 +178,7 @@ export default {
           this.isLoading = false
           console.log(res)
           this.$swal({ title: '已成功刪除該商品', icon: 'success' })
-          this.getCarts()
+          this.getCart()
         })
         .catch(err => console.log(err))
     },
@@ -189,7 +190,7 @@ export default {
           this.isLoading = false
           console.log(res)
           this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
-          this.getCarts()
+          this.getCart()
         })
         .catch(err => console.log(err))
     },
@@ -200,7 +201,7 @@ export default {
           console.log(res)
           if (res.data.success) {
             this.$swal({ title: '已套用優惠券', icon: 'success' })
-            this.getCarts()
+            this.getCart()
           } else {
             this.$swal({ title: res.data.message, icon: 'error' })
           }
