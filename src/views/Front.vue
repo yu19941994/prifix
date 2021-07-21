@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="front">
     <Navbar></Navbar>
-     <div class="contain">
-      <router-view/>
-      <Footer></Footer>
+     <div class="content">
+      <router-view @goto-top="goToTop"/>
+      <Footer @goto-top="goToTop"></Footer>
      </div>
   </div>
   <!-- <div class="contain">
@@ -19,6 +19,14 @@ export default {
   components: {
     Navbar,
     Footer
+  },
+  methods: {
+    goToTop (smooth) {
+      window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' })
+    }
+  },
+  mounted () {
+    this.goToTop(false)
   }
 }
 </script>

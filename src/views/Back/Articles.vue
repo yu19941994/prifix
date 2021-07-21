@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <loading v-model:active="isLoading"
-                :is-full-page="fullPage"/>
+      :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 文章列表
     </h2>

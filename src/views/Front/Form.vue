@@ -1,7 +1,19 @@
 <template>
   <div>
+    <loading v-model:active="isLoading"
+      :is-full-page="fullPage">
+      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
+        <div class="ldio-ujuwlnkwpj">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
     <!-- banner -->
-    <div class="bg__cart__banner mb-5">
+    <div class="bg__cart__banner mb-2">
      <div class="row d-flex justify-content-center align-items-center h-100">
        <div class="col-6 col-lg-4">
          <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
@@ -10,7 +22,7 @@
        </div>
      </div>
     </div>
-    <div class="container">
+    <div class="container py-5">
       <!-- step -->
       <div class="position-relative mb-5">
         <ul class="list-unstyled d-flex w-100 justify-content-evenly step">
@@ -30,7 +42,7 @@
       </div>
       <!-- shoppinglist -->
       <Form ref="form" v-slot="{ errors }" @submit="onSubmit">
-        <div class="pt-3 pb-5">
+        <div class="py-5">
           <div class="bg--light box--shadow rounded p-4 mb-5">
               <div class="mb-3">
                 <label for="name">姓名</label>
@@ -100,7 +112,11 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
 export default {
+  components: {
+    Loading
+  },
   data () {
     return {
       form: {
@@ -112,7 +128,9 @@ export default {
         },
         message: '',
         payment_method: ''
-      }
+      },
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -121,10 +139,12 @@ export default {
       return phoneNumber.test(value) ? true : '需為09開頭且為10碼數字'
     },
     onSubmit () {
+      this.isLoading = true
       console.log(this.form)
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order`
       this.$http.post(api, { data: this.form })
         .then(res => {
+          this.isLoading = false
           if (res.data.success) {
             console.log(res)
             this.$refs.form.resetForm()

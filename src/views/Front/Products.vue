@@ -1,5 +1,17 @@
 <template>
  <div>
+   <loading v-model:active="isLoading"
+      :is-full-page="fullPage">
+      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
+        <div class="ldio-ujuwlnkwpj">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
    <!-- banner -->
    <div class="bg__product__banner mb-5">
      <div class="row d-flex justify-content-center align-items-center h-100">
@@ -45,6 +57,10 @@
           <ul class="row list-unstyled">
             <li class="col-12 col-sm-6 col-xl-4 mb-3" v-for="item of searchProducts" :key="item.id">
               <div class="card position-relative box--shadow">
+                <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+                  <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
+                  <span class="material-icons text-white" v-else>bookmark</span>
+                </button>
                 <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
                 <div class="p-3">
                   <router-link class="img__card__products overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
@@ -83,9 +99,20 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import Loading from 'vue-loading-overlay'
+const storageMethods = {
+  save (favorite) {
+    const favoriteString = JSON.stringify(favorite)
+    localStorage.setItem('favorite', favoriteString)
+  },
+  get () {
+    return JSON.parse(localStorage.getItem('favorite'))
+  }
+}
 export default {
   components: {
-    Pagination
+    Pagination,
+    Loading
   },
   data () {
     return {
@@ -95,14 +122,28 @@ export default {
       productWithPagination: [],
       pagination: {},
       search: '',
-      buyNum: 1
+      buyNum: 1,
+      isLoading: false,
+      fullPage: true,
+      myFavorite: storageMethods.get() || []
     }
   },
   methods: {
+    addFavoriteHandler (item) {
+      console.log('favorite')
+      if (this.myFavorite.includes(item.id)) {
+        this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
+      } else {
+        this.myFavorite.push(item.id)
+      }
+      storageMethods.save(this.myFavorite)
+    },
     getAllProducts () {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products/all`
       this.axios.get(url)
         .then(res => {
+          this.isLoading = false
           console.log(res)
           if (res.data.success) {
             this.products = res.data.products
@@ -112,10 +153,13 @@ export default {
         .catch(err => console.log(err))
     },
     getProducts (page = 1) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
       this.axios.get(url)
         .then(res => {
+          this.isLoading = false
           if (res.data.success) {
+            this.$emit('goto-top', false)
             this.productWithPagination = res.data.products
             this.pagination = res.data.pagination
           }
@@ -142,9 +186,11 @@ export default {
       console.log(e.target.value)
     },
     addCart (item) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
       this.axios.post(url, { data: { product_id: item.id, qty: this.buyNum } })
         .then(res => {
+          this.isLoading = false
           console.log(res)
           this.$swal({ title: '成功加入購物車', icon: 'success' })
           // this.buyNum = 1

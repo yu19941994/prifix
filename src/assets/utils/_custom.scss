@@ -155,6 +155,10 @@ body{
   color: #CA8EFF;
 }
 
+.text--brown{
+  color: #7F4316;
+}
+
 // bg
 .bg--dark{
   background-color: #242424;
@@ -197,6 +201,10 @@ body{
 
 .bg--orange{
   background-color: #FF8000;
+}
+
+.bg--warning{
+  background-color: #F6BF43;
 }
 
 // border
@@ -259,7 +267,7 @@ body{
   box-shadow: 0.15rem 0.15rem 0.1rem rgba(14, 14, 14, 0.15) !important;
 }
 
-// posiiton
+// position
 .top--10{
   top: 10px;
 }
@@ -284,6 +292,14 @@ body{
 
 .right--num{
   right: 20px;
+}
+
+.end--10{
+  right: 10px;
+}
+
+.bottom--10{
+  bottom: 10px;
 }
 
 // hover

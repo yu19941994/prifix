@@ -32,10 +32,17 @@
             </router-link>
           </li>
           <li class="nav-item px-2">
+            <router-link to="/save" class="nav-link text-decoration-none">
+              <span class="material-icons nav__home"
+              :class="{'active': choose === 'save'}"
+              @click="choose='save'">bookmark</span>
+            </router-link>
+          </li>
+          <li class="nav-item px-2">
             <router-link to="/cart" class="nav-link text-decoration-none">
               <span class="material-icons nav__home"
-              :class="{'active': choose === 'p'}"
-              @click="choose='p'">shopping_cart</span>
+              :class="{'active': choose === 'cart'}"
+              @click="choose='cart'">shopping_cart</span>
             </router-link>
           </li>
         </ul>

@@ -66,7 +66,7 @@
                     +
                   </a>
                 </div>
-                <a href="#" class="btn btn--warning d-flex align-items-center w--num justify-content-center" @click.prevent="addCart">
+                <a href="#" class="btn btn--warning d-flex align-items-center w--num justify-content-center" @click.prevent="addCart(product)">
                   <span class="material-icons font--sm">
                     shopping_basket
                   </span>
@@ -95,6 +95,10 @@
       >
         <swiper-slide class="col-3 mb-5 position-relative" v-for="item of filterCat" :key="item.id">
           <div class="card position-relative box--shadow">
+            <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+              <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
+              <span class="material-icons text-white" v-else>bookmark</span>
+            </button>
             <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
             <div class="p-3">
               <router-link class="img__card__suggest overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
@@ -105,7 +109,7 @@
               <h3 class="card-title text-center h5">{{ item.title }}</h3>
               <p class="card-text text-center h5 fw-bolder">${{ item.price }}</p>
               <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-primary d-flex align-items-center">
+                <a href="#" class="btn btn-primary d-flex align-items-center" @click.prevent="addCart(item)">
                   <span class="material-icons font--sm">
                     shopping_basket
                   </span>
@@ -133,6 +137,15 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper.scss'
 
 SwiperCore.use([Autoplay])
+const storageMethods = {
+  save (favorite) {
+    const favoriteString = JSON.stringify(favorite)
+    localStorage.setItem('favorite', favoriteString)
+  },
+  get () {
+    return JSON.parse(localStorage.getItem('favorite'))
+  }
+}
 export default {
   components: {
     Swiper,
@@ -144,10 +157,20 @@ export default {
       fullWidth: 0,
       slideNum: 0,
       products: [],
-      buyNum: 1
+      buyNum: 1,
+      myFavorite: storageMethods.get() || []
     }
   },
   methods: {
+    addFavoriteHandler (item) {
+      console.log('favorite')
+      if (this.myFavorite.includes(item.id)) {
+        this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
+      } else {
+        this.myFavorite.push(item.id)
+      }
+      storageMethods.save(this.myFavorite)
+    },
     adjustWindowSize () {
       this.fullWidth = window.innerWidth
       if (this.fullWidth > 1200) {
@@ -193,10 +216,12 @@ export default {
     onSlideChange () {
       console.log('slide change')
     },
-    addCart () {
+    addCart (item) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
-      this.axios.post(url, { data: { product_id: this.product.id, qty: this.buyNum } })
+      this.axios.post(url, { data: { product_id: item.id, qty: this.buyNum } })
         .then(res => {
+          this.isLoading = false
           console.log(res)
           this.$swal({ title: '成功加入購物車', icon: 'success' })
           this.buyNum = 1

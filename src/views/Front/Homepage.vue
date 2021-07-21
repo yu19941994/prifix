@@ -1,5 +1,17 @@
 <template>
   <div ref="HomePage">
+    <loading v-model:active="isLoading"
+      :is-full-page="fullPage">
+      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
+        <div class="ldio-ujuwlnkwpj">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
     <!-- swipper -->
     <div class="position-absolute text-white zindex__banner position__banner text-center">
       <div class="font--title">Love is Love</div>
@@ -38,6 +50,10 @@
         <ul class="row d-flex list-unstyled">
           <li class="col-12 col-sm-6 col-md-4" v-for="item of adjustRandomProducts" :key="item.id">
             <div class="card position-relative box--shadow">
+              <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+                <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
+                <span class="material-icons text-white" v-else>bookmark</span>
+              </button>
               <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
               <div class="p-3">
                 <router-link class="img__card overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
@@ -129,7 +145,7 @@
             @slideChange="onSlideChange"
             :autoplay='
             {
-              "delay": 10000,
+              "delay": 3000,
               "disableOnInteraction": false
             }'
           >
@@ -153,8 +169,18 @@ import SwiperCore, { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper.scss'
 import { famousQuotes } from '@/fakeData'
+import Loading from 'vue-loading-overlay'
 
 SwiperCore.use([Autoplay])
+const storageMethods = {
+  save (favorite) {
+    const favoriteString = JSON.stringify(favorite)
+    localStorage.setItem('favorite', favoriteString)
+  },
+  get () {
+    return JSON.parse(localStorage.getItem('favorite'))
+  }
+}
 export default {
   data () {
     return {
@@ -173,17 +199,31 @@ export default {
       slideNum: 0,
       articles: [],
       article1: '',
-      article2: ''
+      article2: '',
+      isLoading: false,
+      fullPage: true,
+      myFavorite: storageMethods.get() || []
     }
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    Loading
   },
   methods: {
+    addFavoriteHandler (item) {
+      console.log('favorite')
+      if (this.myFavorite.includes(item.id)) {
+        this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
+      } else {
+        this.myFavorite.push(item.id)
+      }
+      storageMethods.save(this.myFavorite)
+    },
     adjustWindowSize () {
       this.fullWidth = window.innerWidth
       if (this.fullWidth > 1200) {
+        this.randomHandler(3)
         this.slideNum = 4
       } else if (this.fullWidth > 768) {
         this.randomHandler(3)
@@ -203,9 +243,11 @@ export default {
       console.log('slide change')
     },
     async getProducts () {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products/all`
       const vm = this
       try {
+        this.isLoading = false
         const res = await vm.axios.get(url)
         this.products = res.data.products
       } catch (err) {
@@ -242,8 +284,6 @@ export default {
   },
   async mounted () {
     await this.getProducts()
-    const vm = this
-    vm.fullWidth = window.innerWidth
     this.adjustWindowSize()
     window.onresize = () => {
       this.adjustWindowSize()

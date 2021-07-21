@@ -1,7 +1,19 @@
 <template>
   <div>
-   <!-- banner -->
-    <div class="bg__cart__banner mb-5">
+    <loading v-model:active="isLoading"
+      :is-full-page="fullPage">
+      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
+        <div class="ldio-ujuwlnkwpj">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
+    <!-- banner -->
+    <div class="bg__cart__banner mb-2">
      <div class="row d-flex justify-content-center align-items-center h-100">
        <div class="col-6 col-lg-4">
          <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
@@ -10,7 +22,7 @@
        </div>
      </div>
     </div>
-     <div class="container">
+     <div class="container py-5">
       <!-- step -->
       <div class="position-relative mb-5">
         <ul class="list-unstyled d-flex w-100 justify-content-evenly step">
@@ -29,7 +41,7 @@
         </ul>
       </div>
       <!-- paid info -->
-      <div class="pt-3 pb-5">
+      <div class="py-5">
         <div class="bg--light box--shadow rounded p-4 mb-5">
           <div class="row">
             <div class="col-12 col-md-6 mb-4 mb-md-0">
@@ -117,21 +129,29 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
 export default {
+  components: {
+    Loading
+  },
   data () {
     return {
       order: {},
       order_id: '',
       product_id: [],
-      products: []
+      products: [],
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
     getOrder () {
+      this.isLoading = true
       console.log(this.$route)
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order/${this.$route.query.order_id}`
       this.axios.get(url)
         .then(res => {
+          this.isLoading = false
           this.product_id = []
           this.products = []
           console.log(res.data.order)
@@ -140,21 +160,19 @@ export default {
           Object.entries(this.order.products).forEach(item => {
             this.products.push(item)
           })
-          // this.product_id = Object.keys(this.order.products)
           this.product_id.forEach(item => {
             this.products.push(this.order.products[item])
           })
           console.log(this.products)
-          // this.products.forEach(item => {
-          //   this.product.push(this.order.products[item].product)
-          // })
         })
         .catch(err => console.log(err))
     },
     pay () {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/pay/${this.$route.query.order_id}`
       this.axios.post(url)
         .then(res => {
+          this.isLoading = false
           console.log(res)
           this.$swal({ title: '已成功結帳', icon: 'success' })
           this.getOrder()

@@ -1,5 +1,17 @@
 <template>
   <div>
+    <loading v-model:active="isLoading"
+      :is-full-page="fullPage">
+      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
+        <div class="ldio-ujuwlnkwpj">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
     <!-- banner -->
     <div class="bg__article__banner mb-5">
      <div class="row d-flex justify-content-center align-items-center h-100">
@@ -47,18 +59,26 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
 export default {
+  components: {
+    Loading
+  },
   data () {
     return {
       article: {},
-      tags: []
+      tags: [],
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
     getArticle () {
+      this.isLoading = true
       const pdId = this.$route.params.id
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/article/${pdId}`
       this.axios.get(url).then(res => {
+        this.isLoading = false
         console.log(res)
         if (res.data.success) {
           this.article = res.data.article

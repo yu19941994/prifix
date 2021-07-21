@@ -4,6 +4,7 @@ const routes = [
   {
     path: '/',
     component: () => import('../views/Front.vue'),
+    meta: { goTop: true },
     children: [
       {
         path: '',
@@ -26,6 +27,10 @@ const routes = [
         component: () => import('../views/Front/ArticleDetail.vue')
       },
       {
+        path: '/save',
+        component: () => import('../views/Front/Save.vue')
+      },
+      {
         path: '/cart',
         component: () => import('../views/Front/Cart.vue')
       },
@@ -46,7 +51,8 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../views/Back/Login.vue')
+    component: () => import('../views/Back/Login.vue'),
+    meta: { goTop: true }
   },
   {
     path: '/admin',
@@ -72,7 +78,8 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('../views/NotFound.vue')
+    component: () => import('../views/NotFound.vue'),
+    meta: { goTop: true }
   }
 ]
 
@@ -81,4 +88,10 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from) => {
+  console.log(to.meta.goTop)
+  if (to.meta.goTop) {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+})
 export default router

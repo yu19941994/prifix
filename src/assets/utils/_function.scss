@@ -101,3 +101,43 @@
   }
 }
 
+@function coupon_banner($path) {
+  @return url("~@/assets/images/product_banner7.jpg");
+}
+
+.bg__coupon__banner{
+  background: coupon_banner('path.jpg') no-repeat center center; 
+  background-size: cover;
+  height: 200px;
+  width: 100vw;
+  @include media-breakpoint-up(sm) { 
+    height: 240px;
+  }
+  @include media-breakpoint-up(md) { 
+    height: 320px;
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 400px;
+  }
+}
+
+@function save_banner($path) {
+  @return url("~@/assets/images/product_banner10.jpg");
+}
+
+.bg__save__banner{
+  background: save_banner('path.jpg') no-repeat center center; 
+  background-size: cover;
+  height: 200px;
+  width: 100vw;
+  @include media-breakpoint-up(sm) { 
+    height: 240px;
+  }
+  @include media-breakpoint-up(md) { 
+    height: 320px;
+  }
+  @include media-breakpoint-up(lg) { 
+    height: 400px;
+  }
+}
+

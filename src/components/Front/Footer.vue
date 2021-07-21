@@ -20,14 +20,17 @@
   </div>
   <!-- Footer -->
   <footer>
-    <div class="bg--dark__100 py-3">
+    <div class="bg--dark__100 py-3 position-relative">
+      <button class="btn btn--warning position-absolute bottom--10 end--10 py-1 px-2" @click="$emit('goto-top', true)">
+        <span class="material-icons text--brown">navigation</span>
+      </button>
       <div class="container-lg">
         <ul class="list-unstyled d-flex justify-content-evenly">
           <li>
             <router-link to="/" aria-current="page" class="text-decoration-none"><span class="nav__home nav-link active font__menu text-white">首頁</span></router-link>
           </li>
           <li>
-            <router-link to="/products" class="text-decoration-none"><span class="nav__home nav-link font__menu text-white">商品</span></router-link>
+            <router-link to="/products" class="text-decoration-none"><span class="nav__home nav-link font__menu text-white">影音商品</span></router-link>
           </li>
           <li>
             <router-link to="/coupon" class="text-decoration-none"><span class="nav__home nav-link font__menu text-white">優惠活動</span></router-link>
@@ -79,10 +82,8 @@
       <div class="text-center text-white font--sm d-flex justify-content-center align-items-center flex-column flex-sm-row">
         <span class="me-2 mb-2 mb-sm-0">Copyright  ©  2021  HsienYu  個人作業使用，無商業行為</span>
         <router-link to="/login" class="btn btn-outline-light btn-sm d-flex align-items-center">
-          <!-- <a class="btn btn-outline-light btn-sm rounded" href="#"> -->
-            <span class="material-icons me-1">face</span>
-            <span>登入後台</span>
-          <!-- </a> -->
+          <span class="material-icons me-1">face</span>
+          <span>登入後台</span>
         </router-link>
       </div>
     </div>
@@ -91,6 +92,7 @@
 
 <script>
 export default {
+  emits: ['goto-top'],
   methods: {
     onSubmit () {
       console.log('ya')
