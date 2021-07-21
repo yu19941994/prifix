@@ -14,7 +14,14 @@
     </loading>
     <Navbar :carts="carts"></Navbar>
      <div class="content">
-      <router-view @goto-top="goToTop" @add-cart="addCart" @get-cart="getCarts" :carts="carts" :final-total="finalTotal" :total="total"/>
+      <router-view
+      @goto-top="goToTop"
+      @add-cart="addCart"
+      @get-cart="getCarts"
+      :carts="carts"
+      :final-total="finalTotal"
+      :total="total"
+      @on-submit="onSubmit"/>
       <Footer @goto-top="goToTop"></Footer>
      </div>
   </div>
@@ -67,8 +74,26 @@ export default {
           console.log(res)
           if (res.data.success) {
             this.carts = res.data.data.carts
+            this.finalTotal = res.data.data.final_total
+            this.total = res.data.data.total
           }
         })
+    },
+    onSubmit (form) {
+      this.isLoading = true
+      console.log(this.form)
+      const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order`
+      this.$http.post(api, { data: form })
+        .then(res => {
+          this.isLoading = false
+          if (res.data.success) {
+            console.log(res)
+            this.$swal({ title: '已成功建立訂單', icon: 'success' })
+            this.$router.push({ name: 'paid', query: { order_id: res.data.orderId } })
+            this.getCarts()
+          }
+        })
+        .catch(err => console.log(err))
     }
   },
   mounted () {

@@ -132,29 +132,12 @@ export default {
   },
   data () {
     return {
-      // carts: [],
-      // final-total: 0,
-      // total: 0,
       isLoading: false,
       fullPage: true,
       couponValue: ''
     }
   },
   methods: {
-    // getCarts () {
-    //   this.isLoading = true
-    //   const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`
-    //   this.axios.get(url)
-    //     .then(res => {
-    //       this.isLoading = false
-    //       console.log(res)
-    //       if (res.data.success) {
-    //         this.carts = res.data.data.carts
-    //         this.final-total = res.data.data.final_total
-    //         this.total = res.data.data.total
-    //       }
-    //     })
-    // },
     updateCart (action, item) {
       this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`

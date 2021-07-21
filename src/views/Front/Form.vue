@@ -41,7 +41,7 @@
         </ul>
       </div>
       <!-- shoppinglist -->
-      <Form ref="form" v-slot="{ errors }" @submit="onSubmit">
+      <Form ref="form" v-slot="{ errors }" @submit="$emit('on-submit', form)">
         <div class="py-5">
           <div class="bg--light box--shadow rounded p-4 mb-5">
               <div class="mb-3">
@@ -138,11 +138,11 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需為09開頭且為10碼數字'
     },
-    onSubmit () {
+    onSubmit (form) {
       this.isLoading = true
       console.log(this.form)
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order`
-      this.$http.post(api, { data: this.form })
+      this.$http.post(api, { data: form })
         .then(res => {
           this.isLoading = false
           if (res.data.success) {
