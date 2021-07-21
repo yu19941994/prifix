@@ -101,7 +101,7 @@
           </div>
           <div class="d-flex flex-column align-items-end pe-4 mb-5" v-if="carts.length !== 0">
             <p class="h6">商品金額：NT${{ total }}</p>
-            <p class="h5 text--purple mb-3">最終金額：NT${{ finalTotal }}</p>
+            <p class="h5 text--purple mb-3">最終金額：NT${{ Math.round(finalTotal) }}</p>
             <div class="input-group mb-3 w--search">
               <input type="text" class="form-control" placeholder="coupon" aria-label="coupon" aria-describedby="coupon-btn" v-model="couponValue">
               <button class="btn btn-outline-secondary" type="button" id="coupon-btn" @click="useCoupon">套用優惠券</button>

@@ -61,7 +61,7 @@
                     </th>
                     <td class="text-center">{{ item[1].product.title }}</td>
                     <td class="text-center">{{ item[1].qty }}</td>
-                    <td class="text-center">NT${{ item[1].total }}</td>
+                    <td class="text-center">NT${{ Math.round(item[1].final_total) }}</td>
                   </tr>
                 </tbody>
               </table>
