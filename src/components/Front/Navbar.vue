@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fix-top zindex__banner">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top zindex__banner">
     <div class="container-fluid">
       <h1 class="px-2">
         <a class="navbar-brand textindent__title d-block" href="#"></a>
