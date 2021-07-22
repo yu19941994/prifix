@@ -13,7 +13,7 @@
       </div>
     </loading>
     <!-- swipper -->
-    <div class="position-absolute text-white zindex__banner position__banner text-center">
+    <div class="position-absolute text-white zindex__banner__text position__banner text-center">
       <div class="font--title">Love is Love</div>
       <p class="font--subtitle mb-3 mb-md-5">優質平權影音精裝</p>
       <p class="font--description mt-3 mt-md-5 mb-1 mb-md-3 d-none d-sm-block">台灣是亞洲平權的驕傲，<br>不同形式的愛，都該被看見</p>
@@ -101,11 +101,11 @@
       </div>
     </div>
     <!-- article -->
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-5 overflowX">
       <div class="position-relative mb-5" v-if="articles">
         <div class="d-flex justify-content-start">
           <div class="w--articlePhoto">
-            <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image">
+            <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-right" data-aos-duration="1400">
           </div>
         </div>
         <div class="w--article bg--green opacity__article position-absolute top-0 end-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
@@ -120,7 +120,7 @@
       <div class="position-relative" v-if="articles">
         <div class="d-flex justify-content-end">
           <div class="w--articlePhoto">
-            <img :src="articles[1].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image">
+            <img :src="articles[1].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-left" data-aos-duration="1400">
           </div>
         </div>
         <div class="w--article bg--yellow opacity__article position-absolute top-0 start-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
@@ -149,7 +149,7 @@
               "disableOnInteraction": false
             }'
           >
-            <swiper-slide class="col-3 mb-5 position-relative" v-for="item of famousQuotes" :key="item.id">
+            <swiper-slide class="position-relative" v-for="item of famousQuotes" :key="item.id">
               <img src="@/assets/images/rainbow__bg.jpg" alt="" class="img__quote rounded">
               <div class="position-absolute text-white middle--50">
                 <img :src="item.imgUrl" alt="" class="d-flex mb-2 img__famous rounded box--shadow">

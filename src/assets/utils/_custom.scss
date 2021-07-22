@@ -1,8 +1,4 @@
-// *{
-//   overflow: hidden;
-// }
-
-// overflowX
+// overflow-x
 .overflowX{
   overflow-x: hidden !important;
 }
@@ -10,12 +6,14 @@
 // body
 body{
   padding-right: 0px !important;
-  overflow-x: hidden !important;
 }
 
 // z_index
 .zindex__banner{
   z-index: 100;
+  &__text{
+    z-index: 50;
+  }
 }
 
 .zindex--cat{
@@ -246,6 +244,13 @@ body{
   width: 100%;
   @include media-breakpoint-up(sm) { 
     width: 47.5%;
+  }
+}
+
+.w--noneProduct{
+  width: 50%;
+  @include media-breakpoint-up(sm) { 
+    width: 25%;
   }
 }
 

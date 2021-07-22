@@ -46,7 +46,7 @@
           <!-- 無商品的話 -->
           <div class="d-flex flex-column align-items-center" v-if="carts.length === 0">
             <h3 class="h2 text-center mb-4">此購物車內無商品</h3>
-            <router-link class="btn btn--warning d-flex align-items-center w-25 justify-content-center" to="/products">
+            <router-link class="btn btn--warning d-flex align-items-center w--noneProduct justify-content-center" to="/products">
               <span class="material-icons">shopping_bag</span>
               購物去
             </router-link>

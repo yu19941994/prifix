@@ -34,7 +34,7 @@
         <!-- 無商品的話 -->
         <div class="d-flex flex-column align-items-center" v-if="filterProducts.length === 0">
           <h3 class="h2 text-center mb-4">我的珍藏清單中無商品</h3>
-          <router-link class="btn btn--warning d-flex align-items-center w-25 justify-content-center" to="/products">
+          <router-link class="btn btn--warning d-flex align-items-center w--noneProduct justify-content-center" to="/products">
             <span class="material-icons">shopping_bag</span>
             查看商品去
           </router-link>

@@ -56,8 +56,8 @@
               <p class="font--sm lh-lg">
                 {{ product.description }}
               </p>
-              <div class="d-flex justify-content-end align-items-center position-absolute bottom--num right--num">
-                <div class="d-flex me-3">
+              <div class="d-flex justify-content-end align-items-center position-absolute bottom--num right--num flex-column flex-md-row">
+                <div class="d-flex me-0 me-md-3 mb-2 mb-md-0">
                   <a href="#" class="btn btn-outline-light d-flex align-items-center" @click.prevent="buyNumHandler('minus')">
                     -
                   </a>
@@ -84,7 +84,7 @@
      <div class="row">
       <swiper
         :slides-per-view="slideNum"
-        :space-between="50"
+        :space-between="30"
         @swiper="onSwiper"
         @slideChange="onSlideChange"
         :autoplay='

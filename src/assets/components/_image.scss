@@ -126,8 +126,11 @@
 }
 
 .img__productDetail{
-  height: 700px;
+  height: 400px;
   object-fit: cover;
+  @include media-breakpoint-up(sm) { 
+    height: 700px;
+  }
   @include media-breakpoint-up(md) { 
     height: 400px;
   }
