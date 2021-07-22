@@ -2,10 +2,15 @@
 //   overflow: hidden;
 // }
 
+// overflowX
+.overflowX{
+  overflow-x: hidden !important;
+}
+
 // body
 body{
   padding-right: 0px !important;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 // z_index
@@ -261,7 +266,7 @@ body{
 }
 
 .h--productDetail{
-  height: 400px;
+  height: 600px;
   @include media-breakpoint-up(lg) { 
     height: 500px;
   }

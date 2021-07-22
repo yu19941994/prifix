@@ -105,7 +105,7 @@
       <div class="position-relative mb-5" v-if="articles">
         <div class="d-flex justify-content-start">
           <div class="w--articlePhoto">
-            <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-right" data-aos-duration="1400">
+            <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image">
           </div>
         </div>
         <div class="w--article bg--green opacity__article position-absolute top-0 end-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
@@ -120,7 +120,7 @@
       <div class="position-relative" v-if="articles">
         <div class="d-flex justify-content-end">
           <div class="w--articlePhoto">
-            <img :src="articles[1].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-left" data-aos-duration="1400">
+            <img :src="articles[1].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image">
           </div>
         </div>
         <div class="w--article bg--yellow opacity__article position-absolute top-0 start-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
