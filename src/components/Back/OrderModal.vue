@@ -96,7 +96,6 @@ export default {
       this.axios.put(url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempOrder })
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-order')
             this.modal.hide()
@@ -116,7 +115,6 @@ export default {
       this.axios.delete(url)
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-order')
             this.modal.hide()

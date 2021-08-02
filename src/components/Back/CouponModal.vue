@@ -50,28 +50,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="modal-dialog modal-dialog-centered" v-else>
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="delCouponModalLabel" class="modal-title">
-            <span>刪除優惠券</span>
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          是否刪除
-          <strong class="text-danger"></strong> 優惠券(刪除後將無法恢復)。
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="delCoupon">
-            確認刪除
-          </button>
-        </div>
-      </div>
-    </div> -->
     <DelModal @del-item="delCoupon" :temp="tempCoupon" :action="action" :status="status" v-else></DelModal>
   </div>
 </template>
@@ -108,7 +86,6 @@ export default {
       this.$http[method](url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempCoupon })
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-coupon')
             this.modal.hide()
@@ -141,7 +118,6 @@ export default {
       this.axios.delete(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`)
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-coupon')
             this.modal.hide()

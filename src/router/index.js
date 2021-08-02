@@ -11,10 +11,6 @@ const routes = [
         component: () => import('../views/Front/Homepage.vue')
       },
       {
-        path: '/blog',
-        component: () => import('../views/Front/Blog.vue')
-      },
-      {
         path: '/products',
         component: () => import('../views/Front/Products.vue')
       },

@@ -23,7 +23,7 @@
         <h3 class="text-center">平權小學堂</h3>
         <p class="text-center mb-4">一起來了解平權知識，全對可獲得優惠券唷！</p>
         <img src="@/assets/images/quiz.jpg" alt="" class="img__quiz mb-4">
-        <button class="btn btn--warning d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#quizModal">
+        <button class="btn btn-dark d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#quizModal" type="button">
           <span class="material-icons">quiz</span>
           開始測驗
         </button>

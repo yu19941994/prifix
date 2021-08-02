@@ -2,15 +2,6 @@
   <div ref="HomePage">
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <!-- swipper -->
     <div class="position-absolute text-white zindex__banner__text position__banner text-center">
@@ -22,7 +13,7 @@
         <span class="material-icons font--xl animate__fadeInDown">arrow_drop_down</span>
       </div>
     </div>
-    <swiper
+    <swiper class="swiper-wrapper__banner"
       :autoplay='
         {
           "delay": 8000,
@@ -50,12 +41,12 @@
         <ul class="row d-flex list-unstyled">
           <li class="col-12 col-sm-6 col-md-4" v-for="item of adjustRandomProducts" :key="item.id">
             <div class="card position-relative box--shadow">
-              <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+              <button class="btn bg-transparent text-white top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)" type="button">
                 <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
                 <span class="material-icons text-white" v-else>bookmark</span>
               </button>
-              <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
-              <div class="p-3">
+              <span class="badge bg-secondary text-white position-absolute top-0 start-0 zindex--cat d-flex p-2">{{ item.category }}</span>
+              <div class="mb-2">
                 <router-link class="img__card overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
                   <img :src="item.imageUrl" class="card-img-top img__card__inside" alt="...">
                 </router-link>
@@ -169,7 +160,7 @@ import SwiperCore, { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper.scss'
 import { famousQuotes } from '@/fakeData'
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 
 SwiperCore.use([Autoplay])
 const storageMethods = {
@@ -212,7 +203,6 @@ export default {
   },
   methods: {
     addFavoriteHandler (item) {
-      console.log('favorite')
       if (this.myFavorite.includes(item.id)) {
         this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
       } else {
@@ -236,19 +226,12 @@ export default {
         this.slideNum = 1
       }
     },
-    onSwiper (swiper) {
-      console.log(swiper)
-    },
-    onSlideChange () {
-      console.log('slide change')
-    },
     async getProducts () {
       this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products/all`
-      const vm = this
       try {
         this.isLoading = false
-        const res = await vm.axios.get(url)
+        const res = await this.axios.get(url)
         this.products = res.data.products
       } catch (err) {
         console.log(err)
@@ -273,9 +256,7 @@ export default {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/articles?page=:page`
       this.axios.get(url)
         .then(res => {
-          console.log(res)
           this.articles = res.data.articles
-          console.log(this.articles)
           this.article1 = res.data.articles[0].id
           this.article2 = res.data.articles[1].id
         })

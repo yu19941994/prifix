@@ -31,7 +31,6 @@ export default {
         const api = `${process.env.VUE_APP_URL}/api/user/check`
         this.axios.post(api)
           .then(res => {
-            console.log(res.data)
             if (res.data.success) {
               this.checkSuccess = true
             } else {
@@ -39,13 +38,13 @@ export default {
               this.$router.push('/login')
             }
           })
+          .catch(err => console.log(err))
       } else {
         this.$router.push('/login')
       }
     },
     toggleSidebar () {
       this.transX === 'translateX(-100%)' ? (this.transX = 'translateX(0%)') : (this.transX = 'translateX(-100%)')
-      console.log(this.transX)
     }
   },
   created () {

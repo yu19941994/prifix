@@ -2,15 +2,6 @@
   <div>
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
@@ -35,7 +26,7 @@
             <span class="p mb-0">填寫資料</span>
           </li>
           <li class="d-flex flex-column align-items-center">
-            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-warning">3</span>
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-primary">3</span>
             <span class="p mb-0">付款結帳</span>
           </li>
         </ul>
@@ -112,7 +103,7 @@
             <span class="material-icons">chevron_left</span>
             回上一步
           </router-link>
-          <button class="btn btn--warning d-flex align-items-center" @click="pay">
+          <button class="btn btn--warning d-flex align-items-center" @click="pay" type="button">
             付款結帳
             <span class="material-icons">paid</span>
           </button>
@@ -129,7 +120,7 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 export default {
   components: {
     Loading
@@ -147,14 +138,12 @@ export default {
   methods: {
     getOrder () {
       this.isLoading = true
-      console.log(this.$route)
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order/${this.$route.query.order_id}`
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
           this.product_id = []
           this.products = []
-          console.log(res.data.order)
           this.order = res.data.order
           this.order_id = this.$route.query.order_id
           Object.entries(this.order.products).forEach(item => {
@@ -163,7 +152,6 @@ export default {
           this.product_id.forEach(item => {
             this.products.push(this.order.products[item])
           })
-          console.log(this.products)
         })
         .catch(err => console.log(err))
     },
@@ -173,7 +161,6 @@ export default {
       this.axios.post(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           this.$swal({ title: '已成功結帳', icon: 'success' })
           this.getOrder()
         })

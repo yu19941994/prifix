@@ -47,7 +47,6 @@ export default {
         this.axios.post(url, this.userprofile)
           .then(res => {
             if (res.data.success) {
-              // this.errorAlert = false
               const { token, expired } = res.data
               document.cookie = `myToken = ${token}; expires = ${new Date(expired)}`
               this.$router.push('/admin')

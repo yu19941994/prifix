@@ -4,7 +4,7 @@
       <router-link to="/" class="navbar-brand">
         <img src="@/assets/images/white_logo.png" alt="dashboard_logo" width="80" class="d-block">
       </router-link>
-      <button class="btn btn-secondary pt-1 pb-0 px-2" @click="rotateBtn" :style="{ transform:  rotate90 }" tyle="transition-duration: 2s">
+      <button type="button" class="btn btn-secondary pt-1 pb-0 px-2" @click="rotateBtn" :style="{ transform:  rotate90 }" tyle="transition-duration: 2s">
         <span class="material-icons font--md">tune</span>
       </button>
     </div>
@@ -35,7 +35,6 @@ export default {
       const url = `${process.env.VUE_APP_URL}/logout`
       this.axios.post(url)
         .then(res => {
-          console.log(res)
           document.cookie = 'myToken=;expires=;'
           this.$swal({ title: '已登出', icon: 'success' })
           this.$router.push('/login')

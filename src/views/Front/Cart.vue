@@ -2,15 +2,6 @@
   <div>
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
@@ -22,12 +13,12 @@
        </div>
      </div>
     </div>
-    <div class="container py-5">
+    <div class="container-lg py-5">
       <!-- step -->
       <div class="position-relative mb-5" v-if="carts.length !== 0">
         <ul class="list-unstyled d-flex w-100 justify-content-evenly step">
           <li class="d-flex flex-column align-items-center">
-            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-warning">1</span>
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-primary">1</span>
             <span class="p mb-0">確認商品</span>
           </li>
           <li class="d-flex flex-column align-items-center">
@@ -46,13 +37,13 @@
           <!-- 無商品的話 -->
           <div class="d-flex flex-column align-items-center" v-if="carts.length === 0">
             <h3 class="h2 text-center mb-4">此購物車內無商品</h3>
-            <router-link class="btn btn--warning d-flex align-items-center w--noneProduct justify-content-center" to="/products">
+            <router-link class="btn btn-dark d-flex align-items-center w--noneProduct justify-content-center" to="/products">
               <span class="material-icons">shopping_bag</span>
               購物去
             </router-link>
           </div>
           <div class="d-flex justify-content-end mb-3" v-if="carts.length !== 0">
-            <button class="btn btn--purple" @click="deleteAllCarts">
+            <button class="btn btn-dark" @click="deleteAllCarts" type="button">
               <span class="material-icons font--sm">delete</span>
               刪除全部
             </button>
@@ -61,7 +52,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" width="120" class="text-center">縮圖</th>
+                  <th scope="col" width="120" class="text-center d-none d-md-table-cell">縮圖</th>
                   <th scope="col" class="text-center">商品名稱</th>
                   <th scope="col" width="150" class="text-center">數量</th>
                   <th scope="col" width="100" class="text-center">單價</th>
@@ -71,18 +62,18 @@
               </thead>
               <tbody>
                 <tr v-for="item of carts" :key="item.id">
-                  <th scope="row" class="text-center">
+                  <th scope="row" class="text-center d-none d-md-table-cell">
                     <img :src="item.product.imageUrl" alt="" class="img__cart">
                   </th>
                   <td class="text-center">{{ item.product.title }}</td>
                   <td class="text-center">
                     <span class="d-md-none">{{ item.qty }}</span>
                     <div class="d-none d-md-flex justify-content-center">
-                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary " @click.prevent="updateCart('minus', item)">
+                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary rounded-0 rounded-start" @click.prevent="updateCart('minus', item)">
                         -
                       </a>
                       <p class="border border-1 border-dark text-dark text-center input--num__cart mb-0 d-flex justify-content-center align-items-center">{{ item.qty }}</p>
-                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary " @click.prevent="updateCart('plus', item)">
+                      <a href="#" class="btn btn-outline-light d-flex align-items-center text-dark border-1 border-secondary rounded-0 rounded-end" @click.prevent="updateCart('plus', item)">
                         +
                       </a>
                     </div>
@@ -101,7 +92,7 @@
           </div>
           <div class="d-flex flex-column align-items-end pe-4 mb-5" v-if="carts.length !== 0">
             <p class="h6">商品金額：NT${{ total }}</p>
-            <p class="h5 text--purple mb-3">最終金額：NT${{ Math.round(finalTotal) }}</p>
+            <p class="h5 text-primary mb-3">最終金額：NT${{ Math.round(finalTotal) }}</p>
             <div class="input-group mb-3 w--search">
               <input type="text" class="form-control" placeholder="coupon" aria-label="coupon" aria-describedby="coupon-btn" v-model="couponValue">
               <button class="btn btn-outline-secondary" type="button" id="coupon-btn" @click="useCoupon">套用優惠券</button>
@@ -124,7 +115,7 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 export default {
   props: ['carts', 'final-total', 'total'],
   components: {
@@ -149,7 +140,6 @@ export default {
       this.axios.put(url, { data: { product_id: item.id, qty: item.qty } })
         .then(res => {
           this.isLoading = false
-          console.log(res)
           this.$emit('get-cart')
         })
         .catch(err => console.log(err))
@@ -160,7 +150,6 @@ export default {
       this.axios.delete(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           this.$swal({ title: '已成功刪除該商品', icon: 'success' })
           this.$emit('get-cart')
         })
@@ -172,7 +161,6 @@ export default {
       this.axios.delete(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
           this.$emit('get-cart')
         })
@@ -182,7 +170,6 @@ export default {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/coupon`
       this.axios.post(url, { data: { code: this.couponValue } })
         .then(res => {
-          console.log(res)
           if (res.data.success) {
             this.$swal({ title: '已套用優惠券', icon: 'success' })
             this.$emit('get-cart')

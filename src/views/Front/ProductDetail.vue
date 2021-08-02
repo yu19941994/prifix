@@ -12,17 +12,17 @@
    </div>
    <!-- product -->
    <div class="container-lg pt-3 pb-5">
+      <nav aria-label="breadcrumb" class="mb-3 px-5 px-md-0 px-lg-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
+          <li class="breadcrumb-item"><router-link to="/products" class="text-secondary text-decoration-none">影音商品</router-link></li>
+          <li class="breadcrumb-item">{{ product.category }}</li>
+          <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+        </ol>
+      </nav>
       <div class="row">
         <div class="col-12 col-md-4 col-lg-5">
           <div class="mb-5 mb-md-0">
-            <nav aria-label="breadcrumb" class="mb-3 d-md-none font--sm px-5">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
-                <li class="breadcrumb-item"><router-link to="/products" class="text-secondary text-decoration-none">影音商品</router-link></li>
-                <li class="breadcrumb-item">{{ product.category }}</li>
-                <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
-              </ol>
-            </nav>
             <div class="px-5 px-md-0 px-lg-3">
               <img :src="product.imageUrl" alt="" class="w-100 img__productDetail">
             </div>
@@ -30,14 +30,6 @@
         </div>
         <div class="col-12 col-md-8 col-lg-7">
           <div class="px-5 px-md-0">
-            <nav aria-label="breadcrumb" class="mb-3 d-none d-md-block">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
-                <li class="breadcrumb-item"><router-link to="/products" class="text-secondary text-decoration-none">影音商品</router-link></li>
-                <li class="breadcrumb-item">{{ product.category }}</li>
-                <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
-              </ol>
-            </nav>
             <div class="bg-dark text-white p-3 position-relative h--productDetail">
               <h2 class="h4">{{ product.title }}</h2>
               <div class="d-flex align-items-center mb-3">
@@ -58,15 +50,15 @@
               </p>
               <div class="d-flex justify-content-end align-items-center position-absolute bottom--num right--num flex-column flex-md-row">
                 <div class="d-flex me-0 me-md-3 mb-2 mb-md-0">
-                  <a href="#" class="btn btn-outline-light d-flex align-items-center" @click.prevent="buyNumHandler('minus')">
+                  <a href="#" class="btn btn-outline-light d-flex align-items-center rounded-0 rounded-start" @click.prevent="buyNumHandler('minus')">
                     -
                   </a>
                   <input type="number" min="1" class="bg-dark border-1 border-light text-white text-center input--num" v-model="buyNum">
-                  <a href="#" class="btn btn-outline-light d-flex align-items-center" @click.prevent="buyNumHandler('plus')">
+                  <a href="#" class="btn btn-outline-light d-flex align-items-center rounded-0 rounded-end" @click.prevent="buyNumHandler('plus')">
                     +
                   </a>
                 </div>
-                <a href="#" class="btn btn--warning d-flex align-items-center w--num justify-content-center" @click.prevent="$emit('add-cart', product, buyNum)">
+                <a href="#" class="btn btn-primary d-flex align-items-center w--num justify-content-center" @click.prevent="$emit('add-cart', product, buyNum)">
                   <span class="material-icons font--sm">
                     shopping_basket
                   </span>
@@ -95,12 +87,12 @@
       >
         <swiper-slide class="col-3 mb-5 position-relative" v-for="item of filterCat" :key="item.id">
           <div class="card position-relative box--shadow">
-            <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+            <button class="btn bg-transparent text-white top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)" type="button">
               <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
               <span class="material-icons text-white" v-else>bookmark</span>
             </button>
-            <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
-            <div class="p-3">
+            <span class="badge bg-secondary text-white position-absolute top-0 start-0 zindex--cat d-flex p-2">{{ item.category }}</span>
+            <div class="mb-2">
               <router-link class="img__card__suggest overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
                 <img :src="item.imageUrl" class="card-img-top img__card__suggest__inside" alt="...">
               </router-link>
@@ -151,6 +143,13 @@ export default {
     Swiper,
     SwiperSlide
   },
+  watch: {
+    '$route' (to) {
+      if (to.params.id) {
+        this.getProduct()
+      }
+    }
+  },
   data () {
     return {
       product: {},
@@ -163,7 +162,6 @@ export default {
   },
   methods: {
     addFavoriteHandler (item) {
-      console.log('favorite')
       if (this.myFavorite.includes(item.id)) {
         this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
       } else {
@@ -188,20 +186,17 @@ export default {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/product/${pdId}`
       this.axios.get(url)
         .then(res => {
-          console.log(res)
           this.product = res.data.product
         })
         .catch(err => console.log(err))
     },
-    async getProducts () {
+    getProducts () {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products/all`
-      const vm = this
-      try {
-        const res = await vm.axios.get(url)
-        this.products = res.data.products
-      } catch (err) {
-        console.log(err)
-      }
+      this.axios.get(url)
+        .then(res => {
+          this.products = res.data.products
+        })
+        .catch(err => console.log(err))
     },
     buyNumHandler (action) {
       if (this.buyNum > 1) {
@@ -209,12 +204,6 @@ export default {
       } else {
         action === 'plus' ? (this.buyNum += 1) : (this.buyNum = 1)
       }
-    },
-    onSwiper (swiper) {
-      console.log(swiper)
-    },
-    onSlideChange () {
-      console.log('slide change')
     }
   },
   computed: {
@@ -225,8 +214,8 @@ export default {
   created () {
     this.getProduct()
   },
-  async mounted () {
-    await this.getProducts()
+  mounted () {
+    this.getProducts()
     const vm = this
     vm.fullWidth = window.innerWidth
     this.adjustWindowSize()

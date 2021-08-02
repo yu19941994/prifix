@@ -82,7 +82,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res.data)
           if (res.data.success) {
             this.orders = res.data.orders
             this.pagination = res.data.pagination
@@ -99,7 +98,6 @@ export default {
         const tempItem = JSON.parse(JSON.stringify(item))
         tempItem.paid_date = this.timestampToDate(tempItem.paid_date)
         this.$refs.modal.tempOrder = tempItem
-        this.$bus.emit('tempOrder', this.$refs.modal.tempOrder)
       }
     },
     timestampToDate (timestamp) {

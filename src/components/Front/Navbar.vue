@@ -9,31 +9,31 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav list-unstyled ms-auto d-flex align-items-center">
-          <li class="nav-item px-2">
+          <li class="nav-item px-2 nav__home w--nav text-center">
             <router-link to="/products" class="text-decoration-none">
-              <span class="nav__home nav-link font__menu"
+              <span class="nav-link font__menu"
               :class="{'active': choose === 'p'}"
               @click="choose='p'">影音商品</span>
             </router-link>
           </li>
-          <li class="nav-item px-2">
+          <li class="nav-item px-2 nav__home w--nav text-center">
             <router-link to="/coupon" class="text-decoration-none">
-              <span class="nav__home nav-link font__menu"
+              <span class="nav-link font__menu"
               :class="{'active': choose === 'c'}"
               @click="choose='c'">優惠活動</span>
             </router-link>
           </li>
-          <li class="nav-item px-2">
+          <li class="nav-item px-2 nav__home w--nav text-center">
             <router-link to="/save" class="nav-link text-decoration-none">
-              <span class="material-icons nav__home"
+              <span class="material-icons"
               :class="{'active': choose === 'save'}"
               @click="choose='save'">bookmark</span>
             </router-link>
           </li>
-          <li class="nav-item px-2 position-relative">
-            <div class="bg-danger p--circle rounded-circle text-center font--xs position-absolute end--4" v-if="carts.length !== 0">{{ carts.length }}</div>
+          <li class="nav-item px-2 position-relative nav__home w--nav text-center">
+            <div class="bg-danger p--circle rounded-circle text-center font--xs position-absolute end--circle" v-if="carts.length !== 0">{{ carts.length }}</div>
             <router-link to="/cart" class="nav-link text-decoration-none">
-              <span class="material-icons nav__home"
+              <span class="material-icons"
               :class="{'active': choose === 'cart'}"
               @click="choose='cart'">shopping_cart</span>
             </router-link>

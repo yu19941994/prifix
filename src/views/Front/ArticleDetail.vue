@@ -2,15 +2,6 @@
   <div>
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <!-- banner -->
     <div class="bg__article__banner mb-5">
@@ -59,7 +50,7 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 export default {
   components: {
     Loading
@@ -77,14 +68,15 @@ export default {
       this.isLoading = true
       const pdId = this.$route.params.id
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/article/${pdId}`
-      this.axios.get(url).then(res => {
-        this.isLoading = false
-        console.log(res)
-        if (res.data.success) {
-          this.article = res.data.article
-          this.adjustTag()
-        }
-      })
+      this.axios.get(url)
+        .then(res => {
+          this.isLoading = false
+          if (res.data.success) {
+            this.article = res.data.article
+            this.adjustTag()
+          }
+        })
+        .catch(err => console.log(err))
     },
     timestampToDate (timestamp) {
       if (timestamp) {

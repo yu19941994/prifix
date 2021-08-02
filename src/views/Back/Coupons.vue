@@ -77,7 +77,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res.data)
           if (res.data.success) {
             this.coupons = res.data.coupons
             this.pagination = res.data.pagination
@@ -92,13 +91,11 @@ export default {
           : this.status = 'delete'
       if (this.isNew) {
         this.$refs.modal.tempCoupon = { is_enabled: 0 }
-        this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
       }
       if (item) {
         const tempItem = JSON.parse(JSON.stringify(item))
         tempItem.due_date = this.timestampToDate(tempItem.due_date)
         this.$refs.modal.tempCoupon = tempItem
-        this.$bus.emit('tempCoupon', this.$refs.modal.tempCoupon)
       }
     },
     timestampToDate (timestamp) {

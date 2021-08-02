@@ -7,11 +7,10 @@
         <Form ref="form" v-slot="{ errors }" @submit="onSubmit">
           <div class="input-group mb-3">
             <label for="email"></label>
-            <Field class="form-control rounded"
+            <Field class="form-control rounded-start"
                 placeholder="請輸入電子信箱" id="email"
                 name="email"
                 :class="{ 'is-invalid': errors['email'] }" rules="email|required"></Field>
-            <!-- <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage> -->
             <button class="btn btn-primary" type="button" id="subscribeEmail">訂閱</button>
           </div>
         </Form>
@@ -21,7 +20,7 @@
   <!-- Footer -->
   <footer>
     <div class="bg--dark__100 py-3 position-relative">
-      <button class="btn btn--warning position-absolute bottom--10 end--10 py-1 px-2" @click="$emit('goto-top', true)">
+      <button class="btn btn-light position-absolute bottom--10 end--10 py-1 px-2" @click="$emit('goto-top', true)">
         <span class="material-icons text--brown">navigation</span>
       </button>
       <div class="container-lg">
@@ -59,17 +58,17 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="text-decoraion-none text-white font--sm btn">
+                <a href="https://www.youtube.com/" class="text-decoraion-none text-white font--sm btn">
                   <span class="material-icons">smart_display</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="text-decoraion-none text-white font--sm btn">
+                <a href="https://twitter.com/home?lang=zh-tw" class="text-decoraion-none text-white font--sm btn">
                   <span class="material-icons">near_me</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="text-decoraion-none text-white font--sm btn">
+                <a href="https://wx.qq.com/wechat?lang=zh_TW" class="text-decoraion-none text-white font--sm btn">
                   <span class="material-icons">chat</span>
                 </a>
               </li>
@@ -95,7 +94,7 @@ export default {
   emits: ['goto-top'],
   methods: {
     onSubmit () {
-      console.log('ya')
+      // console.log('ya')
     }
   }
 }

@@ -6,8 +6,6 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import bus from './bus'
-// import VCalendar from 'v-calendar'
 import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VueSweetalert2 from 'vue-sweetalert2'
@@ -18,6 +16,7 @@ import {
 import rules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
+import store from './store'
 
 AOS.init({
   once: true
@@ -37,17 +36,14 @@ setLocale('zh_TW')
 const options = {
   confirmButtonColor: '#5ABFDD',
   cancelButtonColor: '#ff7674'
-  // icon: 'success'
 }
 
-const app = createApp(App)
+const app = createApp(App).use(store)
 app.component('Form', Form)
 app.component('Field', Field)
 app.component('ErrorMessage', ErrorMessage)
-app.config.globalProperties.$bus = bus
 app.use(router)
 app.use(VueAxios, axios)
-// app.use(VCalendar, {})
 app.use(VueLoading)
 app.use(VueSweetalert2, options)
 

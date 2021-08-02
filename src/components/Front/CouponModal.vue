@@ -17,22 +17,22 @@
             <img src="@/assets/images/product_banner1.jpg" alt="" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
                   印尼
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
                   日本
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '1-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '1-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
                   台灣
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
                   韓國
                 </button>
               </li>
@@ -53,22 +53,22 @@
             <img src="@/assets/images/product_banner8.jpg" alt="" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
                   婚姻平權
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '2-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '2-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
                   同儕制度
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
                   家屬制度
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
                   伴侶制度
                 </button>
               </li>
@@ -89,22 +89,22 @@
             <img src="@/assets/images/product_banner9.jpg" alt="" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
                   男生與男生
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-2', 2)" :class="{'active': choose === '1-2'}" :disabled="disabledStatus2">
                   男生與女生
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-3', 3)" :class="{'active': choose === '1-3'}" :disabled="disabledStatus3">
                   女生與女生
                 </button>
               </li>
               <li class="col-6">
-                <button class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '3-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
+                <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(true, '3-4', 4)" :class="{'active': choose === '1-4'}" :disabled="disabledStatus4">
                   未成年的人
                 </button>
               </li>
@@ -122,7 +122,7 @@
                 <p class="mb-0">獲得優惠券碼：</p>
                 <textarea id="myCoupon" style="height: 30px;">66RainbowPride</textarea>
               </div>
-              <button class="btn btn--warning" @click="copyCoupon">
+              <button class="btn btn--warning" @click="copyCoupon" type="button">
                 複製
               </button>
             </div>

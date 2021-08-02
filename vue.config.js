@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/prifix/dist/'
+  publicPath: '/prifix/'
 }
 
 css: {

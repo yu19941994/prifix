@@ -3,14 +3,17 @@
   top: 0;
   width: 50px;
   height: 50px;
+  right: 100px;
   animation-name: fadeInDown__s;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   @include media-breakpoint-up(md) { 
     animation-name: fadeInDown;
+    right: 140px;
   }
   @include media-breakpoint-up(lg) { 
     animation-name: fadeInDown__l;
+    right: 160px;
   }
 }
 

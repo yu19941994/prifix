@@ -2,15 +2,6 @@
 <div>
   <loading v-model:active="isLoading"
     :is-full-page="fullPage">
-    <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-      <div class="ldio-ujuwlnkwpj">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
   </loading>
   <!-- banner -->
   <div class="bg__save__banner mb-2">
@@ -34,7 +25,7 @@
         <!-- 無商品的話 -->
         <div class="d-flex flex-column align-items-center" v-if="filterProducts.length === 0">
           <h3 class="h2 text-center mb-4">我的珍藏清單中無商品</h3>
-          <router-link class="btn btn--warning d-flex align-items-center w--noneProduct justify-content-center" to="/products">
+          <router-link class="btn btn-dark d-flex align-items-center w--noneProduct justify-content-center" to="/products">
             <span class="material-icons">shopping_bag</span>
             查看商品去
           </router-link>
@@ -42,7 +33,7 @@
         <ul class="row d-flex list-unstyled">
           <li class="col-12 col-md-6 col-lg-4 mb-3" v-for="item of filterProducts" :key="item.id">
             <div class="card position-relative box--shadow">
-              <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+              <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)" type="button">
                 <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
                 <span class="material-icons text-white" v-else>bookmark</span>
               </button>
@@ -80,7 +71,7 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 const storageMethods = {
   save (favorite) {
     const favoriteString = JSON.stringify(favorite)
@@ -104,7 +95,6 @@ export default {
   },
   methods: {
     addFavoriteHandler (item) {
-      console.log('favorite')
       if (this.myFavorite.includes(item.id)) {
         this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
       } else {
@@ -118,7 +108,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           if (res.data.success) {
             this.products = res.data.products
           }

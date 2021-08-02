@@ -28,18 +28,18 @@
                   <img class="img-fluid" :src="image">
                 </div>
                 <div v-if="!tempProduct.imagesUrl.length || tempProduct.imagesUrl[tempProduct.imagesUrl.length-1]">
-                  <button class="btn btn-outline-primary btn-sm d-block w-100" @click="tempProduct.imagesUrl.push('')">
+                  <button type="button" class="btn btn-outline-primary btn-sm d-block w-100" @click="tempProduct.imagesUrl.push('')">
                     新增圖片
                   </button>
                 </div>
                 <div v-else>
-                  <button class="btn btn-outline-danger btn-sm d-block w-100" @click="tempProduct.imagesUrl.pop()">
+                  <button type="button" class="btn btn-outline-danger btn-sm d-block w-100" @click="tempProduct.imagesUrl.pop()">
                     刪除圖片
                   </button>
                 </div>
               </div>
               <div v-else>
-                <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImages">
+                <button type="button" class="btn btn-outline-primary btn-sm d-block w-100" @click="createImages">
                   多圖新增
                 </button>
               </div>
@@ -150,7 +150,6 @@ export default {
       let url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product`
       let method = 'post'
       if (!this.isNew) {
-        console.log(tempProduct)
         method = 'put'
         url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product/${tempProduct.id}`
       }
@@ -159,7 +158,6 @@ export default {
       this.$http[method](url, { headers: { 'Access-Control-Allow-Origin': '*' }, data: this.tempProduct })
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
@@ -199,7 +197,6 @@ export default {
       this.axios.delete(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`)
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-product')
             this.modal.hide()
@@ -209,7 +206,7 @@ export default {
         .catch(err => console.log(err))
     },
     onSubmit () {
-      console.log('hi')
+      // console.log('hi')
     }
   },
   mounted () {

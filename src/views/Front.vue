@@ -2,15 +2,6 @@
   <div class="front">
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <Navbar :carts="carts"></Navbar>
      <div class="content">
@@ -30,7 +21,7 @@
 <script>
 import Navbar from '@/components/Front/Navbar'
 import Footer from '@/components/Front/Footer'
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 export default {
   components: {
     Navbar,
@@ -56,12 +47,10 @@ export default {
       this.axios.post(url, { data: { product_id: item.id, qty: num } })
         .then(res => {
           this.isLoading = false
-          console.log(res)
           if (res.data.success) {
             this.$swal({ title: '成功加入購物車', icon: 'success' })
             this.getCarts()
           }
-          // this.buyNum = 1
         })
         .catch(err => console.log(err))
     },
@@ -71,23 +60,21 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           if (res.data.success) {
             this.carts = res.data.data.carts
             this.finalTotal = res.data.data.final_total
             this.total = res.data.data.total
           }
         })
+        .catch(err => console.log(err))
     },
     onSubmit (form) {
       this.isLoading = true
-      console.log(this.form)
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order`
       this.$http.post(api, { data: form })
         .then(res => {
           this.isLoading = false
           if (res.data.success) {
-            console.log(res)
             this.$swal({ title: '已成功建立訂單', icon: 'success' })
             this.$router.push({ name: 'paid', query: { order_id: res.data.orderId } })
             this.getCarts()

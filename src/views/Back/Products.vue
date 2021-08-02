@@ -81,7 +81,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res.data)
           if (res.data.success) {
             this.products = res.data.products
             this.pagination = res.data.pagination
@@ -95,7 +94,6 @@ export default {
         : status === 'put' ? this.status = 'put'
           : this.status = 'delete'
       this.$refs.modal.tempProduct = this.isNew ? { imagesUrl: [] } : JSON.parse(JSON.stringify(item))
-      this.$bus.emit('tempProduct', this.$refs.modal.tempProduct)
     },
     isLoadingHandler (boolean) {
       boolean === true ? this.isLoading = true : this.isLoading = false

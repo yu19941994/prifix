@@ -80,7 +80,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res.data)
           if (res.data.success) {
             this.articles = res.data.articles
             this.pagination = res.data.pagination
@@ -90,9 +89,8 @@ export default {
     },
     async getSingleArticle (item) {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/article/${item.id}`
-      const vm = this
       try {
-        const res = await vm.axios.get(url)
+        const res = await this.axios.get(url)
         this.singleArticle = res.data.article
       } catch (err) {
         console.log(err)
@@ -105,18 +103,15 @@ export default {
           : this.status = 'delete'
       if (this.status === 'post') {
         this.$refs.modal.tempArticle = { imageUrl: '' }
-        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
       }
       if (item && this.status === 'put') {
         await this.getSingleArticle(item)
         const tempItem = JSON.parse(JSON.stringify(this.singleArticle))
         tempItem.create_at = this.timestampToDate(tempItem.create_at)
         this.$refs.modal.tempArticle = tempItem
-        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
       }
       if (item && this.status === 'delete') {
         this.$refs.modal.tempArticle = JSON.parse(JSON.stringify(item))
-        this.$bus.emit('tempArticle', this.$refs.modal.tempArticle)
       }
     },
     timestampToDate (timestamp) {

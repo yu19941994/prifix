@@ -2,15 +2,6 @@
   <div>
     <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
@@ -31,7 +22,7 @@
             <span class="p mb-0">確認商品</span>
           </li>
           <li class="d-flex flex-column align-items-center">
-            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-warning">2</span>
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-primary">2</span>
             <span class="p mb-0">填寫資料</span>
           </li>
           <li class="d-flex flex-column align-items-center">
@@ -91,16 +82,13 @@
                 <label for="message" class="form-label">留言</label>
                 <textarea id="message" class="form-control" cols="30" rows="10"></textarea>
               </div>
-              <!-- <div class="text-end" v-if="cart.carts">
-                <button type="submit" class="btn btn-danger" :disabled="cart.carts.length === 0">送出訂單</button>
-              </div> -->
           </div>
           <div class="d-flex justify-content-between">
             <router-link to="/cart" class="btn btn-outline-dark d-flex align-items-center">
               <span class="material-icons">chevron_left</span>
               回上一步
             </router-link>
-            <button class="btn btn-outline-dark d-flex align-items-center" type="submit" >
+            <button class="btn btn-outline-dark d-flex align-items-center" type="submit">
               送出訂單
               <span class="material-icons">navigate_next</span>
             </button>
@@ -112,7 +100,7 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 export default {
   components: {
     Loading
@@ -140,13 +128,11 @@ export default {
     },
     onSubmit (form) {
       this.isLoading = true
-      console.log(this.form)
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/order`
       this.$http.post(api, { data: form })
         .then(res => {
           this.isLoading = false
           if (res.data.success) {
-            console.log(res)
             this.$refs.form.resetForm()
             this.$swal({ title: '已成功建立訂單', icon: 'success' })
             this.$router.push({ name: 'paid', query: { order_id: res.data.orderId } })

@@ -1,49 +1,40 @@
 <template>
- <div>
-   <loading v-model:active="isLoading"
+  <div>
+    <loading v-model:active="isLoading"
       :is-full-page="fullPage">
-      <div class="loadingio-spinner-ellipsis-m5cks5164gn">
-        <div class="ldio-ujuwlnkwpj">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
     </loading>
    <!-- banner -->
-   <div class="bg__product__banner mb-5">
-     <div class="row d-flex justify-content-center align-items-center h-100 mx-0">
-       <div class="col-6 col-lg-4">
-         <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
-           <h2 class="text-center font--banner mb-0">影音商品</h2>
-         </div>
-       </div>
-     </div>
-   </div>
+    <div class="bg__product__banner mb-5">
+      <div class="row d-flex justify-content-center align-items-center h-100 mx-0">
+        <div class="col-6 col-lg-4">
+          <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
+            <h2 class="text-center font--banner mb-0">影音商品</h2>
+          </div>
+        </div>
+      </div>
+    </div>
    <!-- breadcrumb -->
-   <div class="container-lg">
-     <nav aria-label="breadcrumb mb-3">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
-        <li class="breadcrumb-item"><router-link to="/products" class="text-secondary text-decoration-none">影音商品</router-link></li>
-        <li class="breadcrumb-item active" aria-current="page">全部商品</li>
+    <div class="container-lg">
+      <nav aria-label="breadcrumb mb-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
+          <li class="breadcrumb-item"><router-link to="/products" class="text-secondary text-decoration-none">影音商品</router-link></li>
+          <li class="breadcrumb-item active" aria-current="page">全部商品</li>
         </ol>
       </nav>
-   </div>
+    </div>
    <!-- product -->
-   <div class="container-lg">
-     <div class="row">
-       <div class="col-12 col-md-3 mb-4 mb-md-0">
-        <ul class="list-unstyled list-group position-sticky top--list d-none d-md-block">
-          <li class="list-group-item border border-dark" v-for="(item, key, index) of category" :key="index"
-          :class="{ 'active': choose === key }" @click="chooseHandler(key)">
-            <p class="text-center mb-0">{{ key }}（{{ item }}）</p>
-          </li>
-        </ul>
-       </div>
-       <div class="col-12 col-md-9">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-4 mb-md-0">
+          <ul class="list-unstyled list-group position-sticky top--list d-none d-md-block">
+            <li class="list-group-item border border-dark hover--cat" v-for="(item, key, index) of category" :key="index"
+            :class="{ 'active': choose === key }">
+              <a class="text-decoration-none text-dark text-center mb-0 d-block" href="#" @click.prevent="chooseHandler(key)">{{ key }}（{{ item }}）</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-9">
           <div class="d-flex justify-content-end">
             <div class="input-group mb-3 w--search">
               <label for="videoName"></label>
@@ -57,12 +48,12 @@
           <ul class="row list-unstyled">
             <li class="col-12 col-sm-6 col-xl-4 mb-3" v-for="item of searchProducts" :key="item.id">
               <div class="card position-relative box--shadow">
-                <button class="btn btn-dark top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)">
+                <button class="btn bg-transparent text-white top-0 end-0 zindex--cat position-absolute border-0" @click="addFavoriteHandler(item)" type="button">
                   <span class="material-icons text-danger" v-if="myFavorite.includes(item.id)">bookmark</span>
                   <span class="material-icons text-white" v-else>bookmark</span>
                 </button>
-                <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
-                <div class="p-3">
+                <span class="badge bg-secondary text-white position-absolute top-0 start-0 zindex--cat d-flex p-2">{{ item.category }}</span>
+                <div class="mb-2">
                   <router-link class="img__card__products overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
                     <img :src="item.imageUrl" class="card-img-top img__card__products__inside" alt="...">
                   </router-link>
@@ -91,15 +82,15 @@
           <div class="d-flex justify-content-end">
             <Pagination :page="pagination" @get-page="getProducts" v-if="search === '' && choose === '全部商品'"></Pagination>
           </div>
-       </div>
-     </div>
-   </div>
- </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
-import Loading from 'vue-loading-overlay'
+import Loading from '@/components/Front/Loading'
 const storageMethods = {
   save (favorite) {
     const favoriteString = JSON.stringify(favorite)
@@ -130,7 +121,6 @@ export default {
   },
   methods: {
     addFavoriteHandler (item) {
-      console.log('favorite')
       if (this.myFavorite.includes(item.id)) {
         this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1)
       } else {
@@ -144,7 +134,6 @@ export default {
       this.axios.get(url)
         .then(res => {
           this.isLoading = false
-          console.log(res)
           if (res.data.success) {
             this.products = res.data.products
             this.calculateCategories()
@@ -164,6 +153,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
+        .catch(err => console.log(err))
     },
     calculateCategories () {
       this.category['全部商品'] = this.products.length
@@ -175,15 +165,12 @@ export default {
           this.category[cat]++
         }
       })
-      console.log(this.category)
     },
     chooseHandler (key) {
       this.choose = key
-      console.log(this.filterProducts)
     },
     selectHandler (e) {
       this.choose = e.target.value
-      console.log(e.target.value)
     }
   },
   computed: {

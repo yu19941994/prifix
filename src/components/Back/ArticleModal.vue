@@ -133,11 +133,9 @@ export default {
     },
     delArticle () {
       this.$emit('is-loading', true)
-      console.log(this.tempArticle)
       this.axios.delete(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`)
         .then(res => {
           this.$emit('is-loading', false)
-          console.log(res)
           if (res.data.success) {
             this.$emit('get-article')
             this.modal.hide()
