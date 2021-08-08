@@ -153,18 +153,18 @@ export default {
             this.products.push(this.order.products[item])
           })
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     pay () {
       this.isLoading = true
-      const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/pay/${this.$route.query.order_id}`
-      this.axios.post(url)
-        .then(res => {
-          this.isLoading = false
-          this.$swal({ title: '已成功結帳', icon: 'success' })
-          this.getOrder()
-        })
-        .catch(err => console.log(err))
+      // const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/pay/${this.$route.query.order_id}`
+      // this.axios.post(url)
+      //   .then(res => {
+      //     this.isLoading = false
+      //     this.$swal({ title: '已成功結帳', icon: 'success' })
+      //     this.getOrder()
+      //   })
+      //   .catch(err => console.log(err))
     },
     timestampToDate (timestamp) {
       if (timestamp) {

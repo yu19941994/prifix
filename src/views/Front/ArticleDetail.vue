@@ -76,7 +76,7 @@ export default {
             this.adjustTag()
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     timestampToDate (timestamp) {
       if (timestamp) {

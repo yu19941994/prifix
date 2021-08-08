@@ -104,7 +104,7 @@ export default {
             alert('編輯有誤')
           }
         })
-        .catch(err => console.log(err.message))
+        // .catch(err => console.log(err.message))
     },
     delOrder () {
       this.$emit('is-loading', true)
@@ -121,7 +121,7 @@ export default {
             this.$swal({ title: '刪除成功', icon: 'success' })
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     DateToTimestamp (date) {
       return (Date.parse(date) / 1000)

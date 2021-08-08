@@ -112,7 +112,7 @@ export default {
             this.products = res.data.products
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
   },
   computed: {

@@ -86,7 +86,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     adjustStatus (isNew, item, status) {
       this.isNew = isNew

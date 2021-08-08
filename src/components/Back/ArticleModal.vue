@@ -129,7 +129,7 @@ export default {
           }
           this.tempArticle = {}
         })
-        .catch(err => console.log(err.message))
+        // .catch(err => console.log(err.message))
     },
     delArticle () {
       this.$emit('is-loading', true)
@@ -142,7 +142,7 @@ export default {
             this.$swal({ title: '刪除成功', icon: 'success' })
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     DateToTimestamp (date) {
       return (Date.parse(date) / 1000)

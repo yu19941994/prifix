@@ -85,7 +85,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     async getSingleArticle (item) {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/article/${item.id}`
@@ -93,7 +93,7 @@ export default {
         const res = await this.axios.get(url)
         this.singleArticle = res.data.article
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     },
     async adjustStatus (isNew, item, status) {

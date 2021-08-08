@@ -52,7 +52,7 @@ export default {
             this.getCarts()
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     getCarts () {
       this.isLoading = true
@@ -66,7 +66,7 @@ export default {
             this.total = res.data.data.total
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     onSubmit (form) {
       this.isLoading = true
@@ -80,7 +80,7 @@ export default {
             this.getCarts()
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
   },
   mounted () {

@@ -54,7 +54,7 @@ export default {
               this.errorAlert = true
             }
           })
-          .catch(err => console.log(err))
+          // .catch(err => console.log(err))
       }
     },
     goToFront () {

@@ -138,7 +138,7 @@ export default {
             this.$router.push({ name: 'paid', query: { order_id: res.data.orderId } })
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
   }
 }

@@ -139,7 +139,7 @@ export default {
             this.calculateCategories()
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     getProducts (page = 1) {
       this.isLoading = true
@@ -153,7 +153,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     calculateCategories () {
       this.category['全部商品'] = this.products.length

@@ -234,7 +234,7 @@ export default {
         const res = await this.axios.get(url)
         this.products = res.data.products
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     },
     randomHandler (num) {
@@ -260,7 +260,7 @@ export default {
           this.article1 = res.data.articles[0].id
           this.article2 = res.data.articles[1].id
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
   },
   async mounted () {

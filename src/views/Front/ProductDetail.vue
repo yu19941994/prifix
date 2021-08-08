@@ -188,7 +188,7 @@ export default {
         .then(res => {
           this.product = res.data.product
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     getProducts () {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products/all`
@@ -196,7 +196,7 @@ export default {
         .then(res => {
           this.products = res.data.products
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     buyNumHandler (action) {
       if (this.buyNum > 1) {

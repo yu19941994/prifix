@@ -142,7 +142,7 @@ export default {
           this.isLoading = false
           this.$emit('get-cart')
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     deleteCart (item) {
       this.isLoading = true
@@ -153,7 +153,7 @@ export default {
           this.$swal({ title: '已成功刪除該商品', icon: 'success' })
           this.$emit('get-cart')
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     deleteAllCarts () {
       this.isLoading = true
@@ -164,7 +164,7 @@ export default {
           this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
           this.$emit('get-cart')
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     useCoupon () {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/coupon`
@@ -177,7 +177,7 @@ export default {
             this.$swal({ title: res.data.message, icon: 'error' })
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
   },
   computed: {

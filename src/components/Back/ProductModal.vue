@@ -190,7 +190,7 @@ export default {
             this.$swal({ title: alertStr, icon: 'error' })
           }
         })
-        .catch(err => console.log(err.message))
+        // .catch(err => console.log(err.message))
     },
     delProduct () {
       this.$emit('is-loading', true)
@@ -203,7 +203,7 @@ export default {
             this.$swal({ title: '刪除', icon: 'success' })
           }
         })
-        .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     },
     onSubmit () {
       // console.log('hi')
