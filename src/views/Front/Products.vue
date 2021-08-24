@@ -1,8 +1,8 @@
 <template>
   <div>
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
    <!-- banner -->
     <div class="bg__product__banner mb-5">
       <div class="row d-flex justify-content-center align-items-center h-100 mx-0">
@@ -55,7 +55,7 @@
                 <span class="badge bg-secondary text-white position-absolute top-0 start-0 zindex--cat d-flex p-2">{{ item.category }}</span>
                 <div class="mb-2">
                   <router-link class="img__card__products overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
-                    <img :src="item.imageUrl" class="card-img-top img__card__products__inside" alt="...">
+                    <img :src="item.imageUrl" class="card-img-top img__card__products__inside" alt="產品圖片">
                   </router-link>
                 </div>
                 <div class="card-body pt-1">
@@ -101,6 +101,7 @@ const storageMethods = {
   }
 }
 export default {
+  emits: ['add-cart', 'goto-top'],
   components: {
     Pagination,
     Loading
@@ -139,7 +140,7 @@ export default {
             this.calculateCategories()
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     getProducts (page = 1) {
       this.isLoading = true
@@ -153,7 +154,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     calculateCategories () {
       this.category['全部商品'] = this.products.length

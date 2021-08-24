@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  emits: ['get-page'],
   props: ['page']
 }
 </script>

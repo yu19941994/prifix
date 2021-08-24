@@ -7,7 +7,7 @@
         <Form ref="form" v-slot="{ errors }" @submit="onSubmit">
           <div class="input-group mb-3">
             <label for="email"></label>
-            <Field class="form-control rounded-start"
+            <Field class="form-control rounded-start" type="email"
                 placeholder="請輸入電子信箱" id="email"
                 name="email"
                 :class="{ 'is-invalid': errors['email'] }" rules="email|required"></Field>

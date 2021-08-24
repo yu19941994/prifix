@@ -59,6 +59,7 @@ import { Modal } from 'bootstrap'
 import DelModal from './DelModal.vue'
 export default {
   props: ['isNew', 'status'],
+  emits: ['is-loading', 'get-coupon'],
   components: {
     DelModal
   },
@@ -111,7 +112,7 @@ export default {
             this.$swal({ title: alertStr, icon: 'error' })
           }
         })
-        // .catch(err => console.log(err.message))
+        .catch(err => this.$swal({ title: err.message, icon: 'error' }))
     },
     delCoupon () {
       this.$emit('is-loading', true)
@@ -124,7 +125,7 @@ export default {
             this.$swal({ title: '刪除成功', icon: 'success' })
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     DateToTimestamp (date) {
       return (Date.parse(date) / 1000)

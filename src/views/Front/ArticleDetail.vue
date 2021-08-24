@@ -1,8 +1,8 @@
 <template>
   <div>
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
     <!-- banner -->
     <div class="bg__article__banner mb-5">
      <div class="row d-flex justify-content-center align-items-center h-100">
@@ -31,7 +31,7 @@
               <p class="text-warning mb-0">作者：{{ article.author }}</p>
               <p class="text-secondary mb-0">{{ timestampToDate(article.create_at) }}</p>
             </div>
-            <img :src="article.image" alt="" class="img__article__page mb-4">
+            <img :src="article.image" alt="文章圖片" class="img__article__page mb-4">
             <p>{{ article.content }}</p>
           </div>
           <div class="col-12 col-md-3">
@@ -76,7 +76,7 @@ export default {
             this.adjustTag()
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     timestampToDate (timestamp) {
       if (timestamp) {

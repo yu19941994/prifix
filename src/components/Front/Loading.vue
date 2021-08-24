@@ -1,6 +1,5 @@
 <template>
-  <loading v-model:active="isLoading"
-    :is-full-page="fullPage">
+  <Loading>
     <div class="loadingio-spinner-ellipsis-m5cks5164gn">
       <div class="ldio-ujuwlnkwpj">
         <div></div>
@@ -10,7 +9,7 @@
         <div></div>
       </div>
     </div>
-  </loading>
+  </Loading>
 </template>
 
 <script>

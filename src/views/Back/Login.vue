@@ -54,7 +54,7 @@ export default {
               this.errorAlert = true
             }
           })
-          // .catch(err => console.log(err))
+          .catch(err => this.$swal({ title: err, icon: 'error' }))
       }
     },
     goToFront () {

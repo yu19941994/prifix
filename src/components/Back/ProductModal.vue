@@ -128,6 +128,7 @@ import { Modal } from 'bootstrap'
 import DelModal from './DelModal.vue'
 export default {
   props: ['isNew', 'status', 'is-loading'],
+  emits: ['is-loading', 'get-product'],
   components: {
     DelModal
   },
@@ -165,7 +166,6 @@ export default {
             this.tempProduct = {}
           } else {
             let alertStr = ''
-            // const alertStr = res.data.message.join('、')
             if (res.data.message.includes(' title 欄位為必填')) {
               alertStr += '標題欄位為必填,'
             }
@@ -190,7 +190,7 @@ export default {
             this.$swal({ title: alertStr, icon: 'error' })
           }
         })
-        // .catch(err => console.log(err.message))
+        .catch(err => this.$swal({ title: err.message, icon: 'error' }))
     },
     delProduct () {
       this.$emit('is-loading', true)
@@ -203,10 +203,7 @@ export default {
             this.$swal({ title: '刪除', icon: 'success' })
           }
         })
-        // .catch(err => console.log(err))
-    },
-    onSubmit () {
-      // console.log('hi')
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
   },
   mounted () {

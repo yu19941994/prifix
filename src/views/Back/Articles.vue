@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage"/>
     <h2 class="h5 text-white mt-5">
       # 文章列表
@@ -85,7 +85,7 @@ export default {
             this.pagination = res.data.pagination
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     async getSingleArticle (item) {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/article/${item.id}`
@@ -93,7 +93,7 @@ export default {
         const res = await this.axios.get(url)
         this.singleArticle = res.data.article
       } catch (err) {
-        // console.log(err)
+        this.$swal({ title: err, icon: 'error' })
       }
     },
     async adjustStatus (isNew, item, status) {

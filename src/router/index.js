@@ -84,8 +84,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from) => {
-  console.log(to.meta.goTop)
+router.beforeEach((to) => {
   if (to.meta.goTop) {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }

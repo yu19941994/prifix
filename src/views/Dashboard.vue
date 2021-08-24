@@ -38,7 +38,7 @@ export default {
               this.$router.push('/login')
             }
           })
-          // .catch(err => console.log(err))
+          .catch(err => this.$swal({ title: err, icon: 'error' }))
       } else {
         this.$router.push('/login')
       }

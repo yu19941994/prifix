@@ -39,7 +39,7 @@ export default {
           this.$swal({ title: '已登出', icon: 'success' })
           this.$router.push('/login')
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
   }
 }

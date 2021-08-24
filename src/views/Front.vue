@@ -1,8 +1,8 @@
 <template>
   <div class="front">
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
     <Navbar :carts="carts"></Navbar>
      <div class="content">
       <router-view
@@ -52,7 +52,7 @@ export default {
             this.getCarts()
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     getCarts () {
       this.isLoading = true
@@ -66,7 +66,7 @@ export default {
             this.total = res.data.data.total
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     onSubmit (form) {
       this.isLoading = true
@@ -80,7 +80,7 @@ export default {
             this.getCarts()
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
   },
   mounted () {

@@ -1,8 +1,8 @@
 <template>
 <div>
-  <loading v-model:active="isLoading"
+  <Loading v-model:active="isLoading"
     :is-full-page="fullPage">
-  </loading>
+  </Loading>
   <!-- banner -->
   <div class="bg__save__banner mb-2">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -40,14 +40,14 @@
               <span class="badge bg-warning text-white position-absolute top--10 start--10 zindex--cat d-flex">{{ item.category }}</span>
               <div class="p-3">
                 <router-link class="img__card__suggest overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
-                  <img :src="item.imageUrl" class="card-img-top img__card__suggest__inside" alt="...">
+                  <img :src="item.imageUrl" class="card-img-top img__card__suggest__inside" alt="產品圖片">
                 </router-link>
               </div>
               <div class="card-body pt-1">
                 <h3 class="card-title text-center h5">{{ item.title }}</h3>
                 <p class="card-text text-center h5 fw-bolder">${{ item.price }}</p>
                 <div class="d-flex justify-content-between">
-                  <a href="#" class="btn btn-primary d-flex align-items-center">
+                  <a href="#" class="btn btn-primary d-flex align-items-center" @click.prevent="$emit('add-cart', item, 1)">
                     <span class="material-icons font--sm">
                       shopping_basket
                     </span>
@@ -82,6 +82,7 @@ const storageMethods = {
   }
 }
 export default {
+  emits: ['add-cart'],
   components: {
     Loading
   },
@@ -112,7 +113,7 @@ export default {
             this.products = res.data.products
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
   },
   computed: {

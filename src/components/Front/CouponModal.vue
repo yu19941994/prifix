@@ -14,7 +14,7 @@
             <p class="text-center mb-1">
               下列哪一個國家是亞洲第一個同婚合法化的國家
             </p>
-            <img src="@/assets/images/product_banner1.jpg" alt="" class="w-100 mb-4">
+            <img src="@/assets/images/product_banner1.jpg" alt="優惠券圖片" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
                 <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '1-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
@@ -50,7 +50,7 @@
             <p class="text-center mb-1">
               下列哪一個非多元成家法案內容
             </p>
-            <img src="@/assets/images/product_banner8.jpg" alt="" class="w-100 mb-4">
+            <img src="@/assets/images/product_banner8.jpg" alt="優惠券圖片" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
                 <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '2-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">
@@ -86,7 +86,7 @@
             <p class="text-center mb-1">
               同婚法案通過後，下列何者不能結婚
             </p>
-            <img src="@/assets/images/product_banner9.jpg" alt="" class="w-100 mb-4">
+            <img src="@/assets/images/product_banner9.jpg" alt="優惠券圖片" class="w-100 mb-4">
             <ul class="row list-unstyled">
               <li class="col-6">
                 <button type="button" class="btn btn-outline-dark w-100 mb-2" @click="answerHandler(false, '3-1', 1)" :class="{'active': choose === '1-1'}" :disabled="disabledStatus1">

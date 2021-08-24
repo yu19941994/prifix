@@ -1,8 +1,8 @@
 <template>
   <div>
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
      <div class="row d-flex justify-content-center align-items-center h-100">
@@ -32,69 +32,73 @@
         </ul>
       </div>
       <!-- shoppinglist -->
-      <Form ref="form" v-slot="{ errors }" @submit="$emit('on-submit', form)">
-        <div class="py-5">
-          <div class="bg--light box--shadow rounded p-4 mb-5">
-              <div class="mb-3">
-                <label for="name">姓名</label>
-                <Field id="name" name="姓名" type="姓名" class="form-control"
-                  :class="{ 'is-invalid': errors['姓名'] }"
-                  placeholder="請輸入姓名" rules="required" v-model="form.user.name"></Field>
-                <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
-              </div>
+      <div class="d-flex justify-content-center">
+        <div class="w-50">
+          <Form ref="form" v-slot="{ errors }" @submit="$emit('on-submit', form)">
+            <div class="py-5">
+              <div class="bg--light box--shadow rounded p-4 mb-5">
+                  <div class="mb-3">
+                    <label for="name">姓名</label>
+                    <Field id="name" name="姓名" type="text" class="form-control"
+                      :class="{ 'is-invalid': errors['姓名'] }"
+                      placeholder="請輸入姓名" rules="required" v-model="form.user.name"></Field>
+                    <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+                  </div>
 
-              <div class="mb-3">
-                <label for="phone">電話</label>
-                <Field id="phone" name="電話" type="tel" class="form-control"
-                  :class="{ 'is-invalid': errors['電話'] }"
-                  placeholder="請輸入電話" :rules="isPhone" v-model="form.user.tel"></Field>
-                <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
-              </div>
+                  <div class="mb-3">
+                    <label for="phone">電話</label>
+                    <Field id="phone" name="電話" type="tel" class="form-control"
+                      :class="{ 'is-invalid': errors['電話'] }"
+                      placeholder="請輸入電話" :rules="isPhone" v-model="form.user.tel"></Field>
+                    <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+                  </div>
 
-              <div class="mb-3">
-                <label for="address">地址</label>
-                <Field id="address" name="地址" type="地址" class="form-control"
-                  :class="{ 'is-invalid': errors['地址'] }"
-                  placeholder="請輸入地址" rules="required" v-model="form.user.address"></Field>
-                <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
-              </div>
+                  <div class="mb-3">
+                    <label for="address">地址</label>
+                    <Field id="address" name="地址" type="text" class="form-control"
+                      :class="{ 'is-invalid': errors['地址'] }"
+                      placeholder="請輸入地址" rules="required" v-model="form.user.address"></Field>
+                    <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+                  </div>
 
-              <div class="mb-3">
-                <label for="emailUser">電子信箱</label>
-                <Field id="emailUser" name="電子信箱" type="email" class="form-control"
-                  :class="{ 'is-invalid': errors['電子信箱'] }"
-                  placeholder="請輸入電子信箱" rules="email|required" v-model="form.user.email"></Field>
-                <ErrorMessage name="電子信箱" class="invalid-feedback"></ErrorMessage>
-              </div>
+                  <div class="mb-3">
+                    <label for="emailUser">電子信箱</label>
+                    <Field id="emailUser" name="電子信箱" type="email" class="form-control"
+                      :class="{ 'is-invalid': errors['電子信箱'] }"
+                      placeholder="請輸入電子信箱" rules="email|required" v-model="form.user.email"></Field>
+                    <ErrorMessage name="電子信箱" class="invalid-feedback"></ErrorMessage>
+                  </div>
 
-              <div class="mb-3">
-                <label for="payment_method">付款方式</label>
-                <Field name="付款方式" id="payment_method" as="select" class="form-control"
-                  :class="{ 'is-invalid': errors['付款方式'] }" rules="required" v-model="form.payment_method">
-                  <option value="credit_card">信用卡</option>
-                  <option value="atm">ATM匯款</option>
-                  <option value="cash">貨到付款</option>
-                </Field>
-                <ErrorMessage name="付款方式" class="invalid-feedback"></ErrorMessage>
-              </div>
+                  <div class="mb-3">
+                    <label for="payment_method">付款方式</label>
+                    <Field name="付款方式" id="payment_method" as="select" class="form-control"
+                      :class="{ 'is-invalid': errors['付款方式'] }" rules="required" v-model="form.payment_method">
+                      <option value="credit_card">信用卡</option>
+                      <option value="atm">ATM匯款</option>
+                      <option value="cash">貨到付款</option>
+                    </Field>
+                    <ErrorMessage name="付款方式" class="invalid-feedback"></ErrorMessage>
+                  </div>
 
-              <div class="mb-3">
-                <label for="message" class="form-label">留言</label>
-                <textarea id="message" class="form-control" cols="30" rows="10"></textarea>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">留言</label>
+                    <textarea id="message" class="form-control" cols="30" rows="10"></textarea>
+                  </div>
               </div>
-          </div>
-          <div class="d-flex justify-content-between">
-            <router-link to="/cart" class="btn btn-outline-dark d-flex align-items-center">
-              <span class="material-icons">chevron_left</span>
-              回上一步
-            </router-link>
-            <button class="btn btn-outline-dark d-flex align-items-center" type="submit">
-              送出訂單
-              <span class="material-icons">navigate_next</span>
-            </button>
-          </div>
+              <div class="d-flex justify-content-between">
+                <router-link to="/cart" class="btn btn-outline-dark d-flex align-items-center">
+                  <span class="material-icons">chevron_left</span>
+                  回上一步
+                </router-link>
+                <button class="btn btn-outline-dark d-flex align-items-center" type="submit">
+                  送出訂單
+                  <span class="material-icons">navigate_next</span>
+                </button>
+              </div>
+            </div>
+          </Form>
         </div>
-      </Form>
+      </div>
     </div>
   </div>
 </template>
@@ -102,6 +106,7 @@
 <script>
 import Loading from '@/components/Front/Loading'
 export default {
+  emits: ['on-submit'],
   components: {
     Loading
   },
@@ -138,7 +143,7 @@ export default {
             this.$router.push({ name: 'paid', query: { order_id: res.data.orderId } })
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
   }
 }

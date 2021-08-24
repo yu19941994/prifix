@@ -1,8 +1,8 @@
 <template>
   <div ref="HomePage">
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
     <!-- swipper -->
     <div class="position-absolute text-white zindex__banner__text position__banner text-center">
       <div class="font--title">Love is Love</div>
@@ -13,17 +13,17 @@
         <span class="material-icons font--xl animate__fadeInDown">arrow_drop_down</span>
       </div>
     </div>
-    <swiper class="swiper-wrapper__banner"
+    <Swiper class="swiper-wrapper__banner"
       :autoplay='
         {
           "delay": 8000,
           "disableOnInteraction": false
         }'
       >
-      <swiper-slide v-for="image in product.imagesUrl" :key="image">
-        <img :src="image" alt="" class="img__banner">
-      </swiper-slide>
-    </swiper>
+      <Swiper-slide v-for="image in product.imagesUrl" :key="image">
+        <img :src="image" alt="橫幅圖片" class="img__banner">
+      </Swiper-slide>
+    </Swiper>
     <!-- 最新上映 -->
     <div class="container-lg pt-4 py-5">
       <div class="d-flex justify-content-between align-items-end">
@@ -48,7 +48,7 @@
               <span class="badge bg-secondary text-white position-absolute top-0 start-0 zindex--cat d-flex p-2">{{ item.category }}</span>
               <div class="mb-2">
                 <router-link class="img__card overflow-hidden position-relative d-block" :to="`/productDetail/${item.id}`">
-                  <img :src="item.imageUrl" class="card-img-top img__card__inside" alt="...">
+                  <img :src="item.imageUrl" class="card-img-top img__card__inside" alt="產品圖片">
                 </router-link>
               </div>
               <div class="card-body pt-1">
@@ -96,7 +96,7 @@
       <div class="position-relative mb-5" v-if="articles">
         <div class="d-flex justify-content-start">
           <div class="w--articlePhoto">
-            <img :src="articles[0].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-right" data-aos-duration="1400">
+            <img :src="articles[0].image" alt="文章圖片" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-right" data-aos-duration="1400">
           </div>
         </div>
         <div class="w--article bg--green opacity__article position-absolute top-0 end-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
@@ -111,7 +111,7 @@
       <div class="position-relative" v-if="articles">
         <div class="d-flex justify-content-end">
           <div class="w--articlePhoto">
-            <img :src="articles[1].image" alt="" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-left" data-aos-duration="1400">
+            <img :src="articles[1].image" alt="文章圖片" class="img__article" v-if="articles && articles[0] && articles[0].image" data-aos="fade-left" data-aos-duration="1400">
           </div>
         </div>
         <div class="w--article bg--yellow opacity__article position-absolute top-0 start-0 h-100 d-flex flex-column align-items-center justify-content-center px-3 px-md-5">
@@ -129,26 +129,24 @@
       <div class="container-lg">
         <h2 class="h4 text-white text-center py-2">名人的挺同語錄</h2>
         <div class="row">
-          <swiper
+          <Swiper
             :slides-per-view="slideNum"
             :space-between="50"
-            @swiper="onSwiper"
-            @slideChange="onSlideChange"
             :autoplay='
             {
               "delay": 3000,
               "disableOnInteraction": false
             }'
           >
-            <swiper-slide class="position-relative" v-for="item of famousQuotes" :key="item.id">
-              <img src="@/assets/images/rainbow__bg.jpg" alt="" class="img__quote rounded">
+            <Swiper-slide class="position-relative" v-for="item of famousQuotes" :key="item.id">
+              <img src="@/assets/images/rainbow__bg.jpg" alt="名人圖片背景" class="img__quote rounded">
               <div class="position-absolute text-white middle--50">
-                <img :src="item.imgUrl" alt="" class="d-flex mb-2 img__famous rounded box--shadow">
+                <img :src="item.imgUrl" alt="名人圖片" class="d-flex mb-2 img__famous rounded box--shadow">
                 <h3 class="h5 text-center">{{ item.people }}</h3>
                 <p class="text-center font--xs">“ {{ item.quote }} ”</p>
               </div>
-            </swiper-slide>
-          </swiper>
+            </Swiper-slide>
+          </Swiper>
         </div>
       </div>
     </div>
@@ -173,6 +171,7 @@ const storageMethods = {
   }
 }
 export default {
+  emits: ['add-cart'],
   data () {
     return {
       product: {
@@ -225,6 +224,24 @@ export default {
         this.randomHandler(1)
         this.slideNum = 1
       }
+      // switch (window.innerWidth) {
+      //   case (window.innerWidth > 1200):
+      //     this.randomHandler(3)
+      //     this.slideNum = 4
+      //     break
+      //   case (window.innerWidth > 768):
+      //     this.randomHandler(3)
+      //     this.slideNum = 3
+      //     break
+      //   case (window.innerWidth > 576):
+      //     this.randomHandler(2)
+      //     this.slideNum = 2
+      //     break
+      //   case (window.innerWidth <= 576):
+      //     this.randomHandler(1)
+      //     this.slideNum = 1
+      //     break
+      // }
     },
     async getProducts () {
       this.isLoading = true
@@ -234,7 +251,7 @@ export default {
         const res = await this.axios.get(url)
         this.products = res.data.products
       } catch (err) {
-        // console.log(err)
+        this.$swal({ title: err, icon: 'error' })
       }
     },
     randomHandler (num) {
@@ -260,8 +277,11 @@ export default {
           this.article1 = res.data.articles[0].id
           this.article2 = res.data.articles[1].id
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
+    // addComma (money) {
+    //   return money.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+    // }
   },
   async mounted () {
     await this.getProducts()

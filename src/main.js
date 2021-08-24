@@ -16,7 +16,6 @@ import {
 import rules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
-import store from './store'
 
 AOS.init({
   once: true
@@ -38,7 +37,7 @@ const options = {
   cancelButtonColor: '#ff7674'
 }
 
-const app = createApp(App).use(store)
+const app = createApp(App)
 app.component('Form', Form)
 app.component('Field', Field)
 app.component('ErrorMessage', ErrorMessage)

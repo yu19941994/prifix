@@ -1,8 +1,8 @@
 <template>
   <div>
-    <loading v-model:active="isLoading"
+    <Loading v-model:active="isLoading"
       :is-full-page="fullPage">
-    </loading>
+    </Loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
      <div class="row d-flex justify-content-center align-items-center h-100">
@@ -32,8 +32,8 @@
         </ul>
       </div>
       <!-- shoppinglist -->
-      <div class="py-5">
-        <div class="bg--light box--shadow rounded p-4 mb-5">
+      <div class="py-5 d-flex justify-content-center">
+        <div class="bg--light box--shadow rounded p-4 mb-5 w-50">
           <!-- 無商品的話 -->
           <div class="d-flex flex-column align-items-center" v-if="carts.length === 0">
             <h3 class="h2 text-center mb-4">此購物車內無商品</h3>
@@ -63,7 +63,7 @@
               <tbody>
                 <tr v-for="item of carts" :key="item.id">
                   <th scope="row" class="text-center d-none d-md-table-cell">
-                    <img :src="item.product.imageUrl" alt="" class="img__cart">
+                    <img :src="item.product.imageUrl" alt="產品圖片" class="img__cart">
                   </th>
                   <td class="text-center">{{ item.product.title }}</td>
                   <td class="text-center">
@@ -78,8 +78,8 @@
                       </a>
                     </div>
                   </td>
-                  <td class="text-center">NT${{ item.product.price }}</td>
-                  <td class="text-center">NT${{ item.total }}</td>
+                  <td class="text-center">NT${{ addComma(item.product.price) }}</td>
+                  <td class="text-center">NT${{ addComma(item.total) }}</td>
                   <td class="text-center">
                     <button type="button" class="btn btn-sm btn-danger text-white" @click="deleteCart(item)">
                         <span class="material-icons font--sm">delete</span>
@@ -91,23 +91,27 @@
             </table>
           </div>
           <div class="d-flex flex-column align-items-end pe-4 mb-5" v-if="carts.length !== 0">
-            <p class="h6">商品金額：NT${{ total }}</p>
-            <p class="h5 text-primary mb-3">最終金額：NT${{ Math.round(finalTotal) }}</p>
+            <p class="h6">商品金額：NT${{ addComma(total) }}</p>
+            <p class="h5 text-primary mb-3">最終金額：NT${{ addComma(Math.round(finalTotal)) }}</p>
             <div class="input-group mb-3 w--search">
               <input type="text" class="form-control" placeholder="coupon" aria-label="coupon" aria-describedby="coupon-btn" v-model="couponValue">
               <button class="btn btn-outline-secondary" type="button" id="coupon-btn" @click="useCoupon">套用優惠券</button>
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-between" v-if="carts.length !== 0">
-          <router-link to="/products" class="btn btn-outline-dark d-flex align-items-center">
-            <span class="material-icons">chevron_left</span>
-            返回購物
-          </router-link>
-          <router-link to="/form" class="btn btn-outline-dark d-flex align-items-center">
-            填寫資料
-            <span class="material-icons">navigate_next</span>
-          </router-link>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="w-50">
+          <div class="d-flex justify-content-between" v-if="carts.length !== 0">
+            <router-link to="/products" class="btn btn-outline-dark d-flex align-items-center">
+              <span class="material-icons">chevron_left</span>
+              返回購物
+            </router-link>
+            <router-link to="/form" class="btn btn-outline-dark d-flex align-items-center">
+              填寫資料
+              <span class="material-icons">navigate_next</span>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -118,6 +122,7 @@
 import Loading from '@/components/Front/Loading'
 export default {
   props: ['carts', 'final-total', 'total'],
+  emits: ['get-cart'],
   components: {
     Loading
   },
@@ -125,7 +130,8 @@ export default {
     return {
       isLoading: false,
       fullPage: true,
-      couponValue: ''
+      couponValue: '',
+      qty: 0
     }
   },
   methods: {
@@ -135,36 +141,36 @@ export default {
       if (this.buyNum > 1) {
         action === 'plus' ? (item.qty += 1) : (item.qty -= 1)
       } else {
-        action === 'plus' ? (item.qty += 1) : (item.qty -= 1)
+        action === 'plus' ? (item.qty += 1) : (item.qty -= 0)
       }
       this.axios.put(url, { data: { product_id: item.id, qty: item.qty } })
-        .then(res => {
+        .then(() => {
           this.isLoading = false
           this.$emit('get-cart')
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     deleteCart (item) {
       this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
       this.axios.delete(url)
-        .then(res => {
+        .then(() => {
           this.isLoading = false
           this.$swal({ title: '已成功刪除該商品', icon: 'success' })
           this.$emit('get-cart')
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     deleteAllCarts () {
       this.isLoading = true
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/carts`
       this.axios.delete(url)
-        .then(res => {
+        .then(() => {
           this.isLoading = false
           this.$swal({ title: '已成功刪除全部商品', icon: 'success' })
           this.$emit('get-cart')
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
     },
     useCoupon () {
       const url = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/coupon`
@@ -177,7 +183,10 @@ export default {
             this.$swal({ title: res.data.message, icon: 'error' })
           }
         })
-        // .catch(err => console.log(err))
+        .catch(err => this.$swal({ title: err, icon: 'error' }))
+    },
+    addComma (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   },
   computed: {
