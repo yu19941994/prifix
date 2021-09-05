@@ -226,6 +226,13 @@ body{
 }
 
 // width
+.w--form{
+  width: 100%;
+  @include media-breakpoint-up(md) { 
+    width: 60%;
+  }
+}
+
 .w--47{
   width: 47.5%;
 }
@@ -364,11 +371,11 @@ body{
 
 // opacity
 .opacity__article{
-  opacity: 78%;
+  opacity: 0.78;
 }
 
 .opacity__banner{
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 // padding

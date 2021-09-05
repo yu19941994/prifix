@@ -5,7 +5,7 @@
     </Loading>
     <!-- banner -->
     <div class="bg__cart__banner mb-2">
-     <div class="row d-flex justify-content-center align-items-center h-100">
+     <div class="row d-flex justify-content-center align-items-center h-100 gx-0">
        <div class="col-6 col-lg-4">
          <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
            <h2 class="text-center font--banner mb-0">結帳付款</h2>
@@ -14,6 +14,12 @@
      </div>
     </div>
      <div class="container py-5">
+      <nav aria-label="breadcrumb mb-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><router-link to="/" class="text-secondary text-decoration-none">首頁</router-link></li>
+          <li class="breadcrumb-item active" aria-current="page">購物車列表</li>
+        </ol>
+      </nav>
       <!-- step -->
       <div class="position-relative mb-5">
         <ul class="list-unstyled d-flex w-100 justify-content-evenly step">
@@ -26,15 +32,15 @@
             <span class="p mb-0">填寫資料</span>
           </li>
           <li class="d-flex flex-column align-items-center">
-            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-primary">3</span>
+            <span class="px-3 py-2 border border-2 border-dark rounded-circle step__label bg-dark text-white">3</span>
             <span class="p mb-0">付款結帳</span>
           </li>
         </ul>
       </div>
       <!-- paid info -->
-      <div class="d-flex justify-content-center">
-        <div class="w-50">
-          <div class="py-5">
+      <div class="container-lg">
+        <div class="d-flex justify-content-center">
+          <div class="py-5 w--form">
             <div class="bg--light box--shadow rounded p-4 mb-5">
               <div class="row">
                 <div class="col-12 mb-4 mb-md-0">
@@ -99,22 +105,22 @@
                   </table>
                 </div>
               </div>
-            </div>
-            <div class="d-flex justify-content-between" v-if="order.is_paid === false">
-              <router-link to="/form" class="btn btn-outline-dark d-flex align-items-center">
-                <span class="material-icons">chevron_left</span>
-                回上一步
-              </router-link>
-              <button class="btn btn--warning d-flex align-items-center" @click="pay" type="button">
-                付款結帳
-                <span class="material-icons">paid</span>
-              </button>
-            </div>
-            <div class="d-flex justify-content-end" v-if="order.is_paid === true">
-              <router-link to="/products" class="btn btn-primary d-flex align-items-center">
-                <span class="material-icons">shopping_bag</span>
-                繼續購物
-              </router-link>
+              <div class="d-flex justify-content-between mt-3" v-if="order.is_paid === false">
+                <router-link to="/form" class="btn btn-outline-secondary d-flex align-items-center">
+                  <span class="material-icons">chevron_left</span>
+                  回上一步
+                </router-link>
+                <button class="btn btn--warning d-flex align-items-center" @click="pay" type="button">
+                  付款結帳
+                  <span class="material-icons">paid</span>
+                </button>
+              </div>
+              <div class="d-flex justify-content-end" v-if="order.is_paid === true">
+                <router-link to="/products" class="btn btn-primary d-flex align-items-center">
+                  <span class="material-icons">shopping_bag</span>
+                  繼續購物
+                </router-link>
+              </div>
             </div>
           </div>
         </div>

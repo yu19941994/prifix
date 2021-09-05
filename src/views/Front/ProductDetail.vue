@@ -2,7 +2,7 @@
   <div>
     <!-- banner -->
     <div class="bg__productDetail__banner mb-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100 gx-0">
         <div class="col-6 col-lg-4">
           <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
             <h2 class="text-center font--banner mb-0">商品介紹</h2>
@@ -91,8 +91,8 @@
     </div>
     <!-- suggest -->
     <div class="container-lg border-5 border--top--purple pt-3 pb-5">
-      <h3 class="h2 text-center mb-3">同類影音</h3>
-      <div class="row">
+      <h3 class="h2 text-center mb-5">同類影音</h3>
+      <div class="row gx-0">
         <Swiper
           :slides-per-view="slideNum"
           :space-between="30"

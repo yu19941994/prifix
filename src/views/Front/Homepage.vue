@@ -76,7 +76,7 @@
     </div>
     <!-- Prifix 平台忠旨 -->
     <div class="bg--black py-5">
-      <div class="row d-flex justify-content-center">
+      <div class="row d-flex justify-content-center gx-0">
         <div class="col-10 col-md-8 col-lg-6 d-flex flex-column align-items-center">
           <h2 class="text-white text-center py-2 mb-4">平權影音義賣，為世界平權盡一份心</h2>
           <p class="text-white text-center d-none d-sm-block">台灣是個兼容並蓄多元族群的淨土。<br>也不乏許多非營利團體願意站出來為這個議題努力<br>然而世界上仍有許多國家的人民，深受此權益的迫害</p>
@@ -279,9 +279,6 @@ export default {
         })
         .catch(err => this.$swal({ title: err, icon: 'error' }))
     }
-    // addComma (money) {
-    //   return money.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-    // }
   },
   async mounted () {
     await this.getProducts()

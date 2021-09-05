@@ -2,7 +2,7 @@
   <div>
     <!-- banner -->
     <div class="bg__coupon__banner mb-5">
-     <div class="row d-flex justify-content-center align-items-center h-100">
+     <div class="row d-flex justify-content-center align-items-center h-100 gx-0">
        <div class="col-6 col-lg-4">
          <div class="bg-light py-2 py-sm-4 rounded opacity__banner">
            <h2 class="text-center font--banner mb-0">優惠活動</h2>
