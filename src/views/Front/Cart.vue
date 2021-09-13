@@ -216,15 +216,19 @@ export default {
       storageMethods.save(this.myFavorite)
     },
     adjustWindowSize () {
-      this.fullWidth = window.innerWidth
-      if (this.fullWidth > 1200) {
-        this.slideNum = 4
-      } else if (this.fullWidth > 768) {
-        this.slideNum = 3
-      } else if (this.fullWidth > 576) {
-        this.slideNum = 2
-      } else {
-        this.slideNum = 1
+      switch (true) {
+        case (window.innerWidth > 1200):
+          this.slideNum = 4
+          break
+        case (window.innerWidth > 768):
+          this.slideNum = 3
+          break
+        case (window.innerWidth > 576):
+          this.slideNum = 2
+          break
+        case (window.innerWidth <= 576):
+          this.slideNum = 1
+          break
       }
     },
     updateCart (action, item) {

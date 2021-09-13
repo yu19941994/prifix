@@ -20,16 +20,16 @@
             <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
           </ol>
         </nav>
-        <div class="row">
-          <div class="col-12 col-md-4 col-lg-5">
+        <div class="row gx-0">
+          <div class="col-12 col-md-6 col-lg-5">
             <div class="mb-5 mb-md-0">
-              <div class="px-5 px-md-0 px-lg-3">
+              <div class="">
                 <img :src="product.imageUrl" alt="產品圖片" class="w-100 img__productDetail">
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-8 col-lg-7">
-            <div class="px-5 px-md-0 px-lg-3">
+          <div class="col-12 col-md-6 col-lg-7">
+            <div class="">
               <div class="bg-dark text-white p-3 position-relative h--productDetail">
                 <h2 class="h4">{{ product.title }}</h2>
                 <div class="d-flex align-items-center mb-3">
@@ -45,8 +45,7 @@
                 </div>
                 <hr>
                 <p class="h6">劇情簡介：</p>
-                <p class="font--sm lh-lg">
-                  {{ product.description }}
+                <p class="font--sm lh-lg" v-html="product.description">
                 </p>
                 <div class="d-none d-md-flex justify-content-end align-items-center position-absolute bottom--num right--num">
                   <div class="d-flex me-0 me-md-3 mb-2 mb-md-0">
@@ -188,15 +187,19 @@ export default {
       storageMethods.save(this.myFavorite)
     },
     adjustWindowSize () {
-      this.fullWidth = window.innerWidth
-      if (this.fullWidth > 1200) {
-        this.slideNum = 4
-      } else if (this.fullWidth > 768) {
-        this.slideNum = 3
-      } else if (this.fullWidth > 576) {
-        this.slideNum = 2
-      } else {
-        this.slideNum = 1
+      switch (true) {
+        case (window.innerWidth > 1200):
+          this.slideNum = 4
+          break
+        case (window.innerWidth > 768):
+          this.slideNum = 3
+          break
+        case (window.innerWidth > 576):
+          this.slideNum = 2
+          break
+        case (window.innerWidth <= 576):
+          this.slideNum = 1
+          break
       }
     },
     getProduct () {

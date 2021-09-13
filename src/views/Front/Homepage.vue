@@ -210,38 +210,24 @@ export default {
       storageMethods.save(this.myFavorite)
     },
     adjustWindowSize () {
-      this.fullWidth = window.innerWidth
-      if (this.fullWidth > 1200) {
-        this.randomHandler(3)
-        this.slideNum = 4
-      } else if (this.fullWidth > 768) {
-        this.randomHandler(3)
-        this.slideNum = 3
-      } else if (this.fullWidth > 576) {
-        this.randomHandler(2)
-        this.slideNum = 2
-      } else {
-        this.randomHandler(1)
-        this.slideNum = 1
+      switch (true) {
+        case (window.innerWidth > 1200):
+          this.randomHandler(3)
+          this.slideNum = 4
+          break
+        case (window.innerWidth > 768):
+          this.randomHandler(3)
+          this.slideNum = 3
+          break
+        case (window.innerWidth > 576):
+          this.randomHandler(2)
+          this.slideNum = 2
+          break
+        case (window.innerWidth <= 576):
+          this.randomHandler(1)
+          this.slideNum = 1
+          break
       }
-      // switch (window.innerWidth) {
-      //   case (window.innerWidth > 1200):
-      //     this.randomHandler(3)
-      //     this.slideNum = 4
-      //     break
-      //   case (window.innerWidth > 768):
-      //     this.randomHandler(3)
-      //     this.slideNum = 3
-      //     break
-      //   case (window.innerWidth > 576):
-      //     this.randomHandler(2)
-      //     this.slideNum = 2
-      //     break
-      //   case (window.innerWidth <= 576):
-      //     this.randomHandler(1)
-      //     this.slideNum = 1
-      //     break
-      // }
     },
     async getProducts () {
       this.isLoading = true

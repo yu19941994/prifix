@@ -14,3 +14,7 @@ th,td,tr{
   color: #000;
   border-color: #F1E1FF;
 }
+
+.table-responsive th{
+  word-break:keep-all;
+}
